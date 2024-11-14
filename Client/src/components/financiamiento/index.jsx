@@ -1,4 +1,4 @@
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 const Financiamiento = (props) => {
   return (
     <div>

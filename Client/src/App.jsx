@@ -17,7 +17,7 @@ import RegistroCliente from "./components/registrocliente/index.jsx";
 import CrearUsuario from "./components/crearusuario/index.jsx";
 import RecordatorioContrasena from "./components/recordatoriocontrasena/index.jsx";
 import axios from "axios";
-import logo from "./img/logoAveza.png";
+import logo from "./img/LOGO.jpg";
 import PDF from "./components/PDF/index.jsx";
 import Autorizacion from "./components/autorizacion/index.jsx";
 import Insolvencia from "./components/insolvencia/index.jsx";

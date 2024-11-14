@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./consultas.css";
 import { postConsulta } from "../../redux/actions";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Mystyles";
 // import validation from '../../components/validation/validation';

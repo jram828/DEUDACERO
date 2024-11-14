@@ -1,6 +1,6 @@
 
 import "./recordatorio.css";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import { Button } from "../Mystyles";
 import { Link, useNavigate } from "react-router-dom";
 

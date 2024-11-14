@@ -1,7 +1,7 @@
 // import SearchBar from "../searchbar";
 import { Link} from "react-router-dom";
 import { Button } from "../Mystyles";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import "./nav.css";
 import { useDispatch } from "react-redux";
 import { setFiltro } from "../../redux/actions";

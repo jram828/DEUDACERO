@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 
 const DocumentosLegales = () => {
     

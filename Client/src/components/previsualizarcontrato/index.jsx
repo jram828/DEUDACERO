@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import "../../App.css";
 import "../previsualizarcontrato/previsualizar.css";
 import React, { useState } from "react";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 // import { URL } from "../../App";
 import { printDivContent } from "../../utils/printDivContent";
 import Docxtemplater from "docxtemplater";

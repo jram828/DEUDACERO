@@ -2,7 +2,7 @@ import "../../App.css";
 import React from "react";
 import { useSelector } from "react-redux";
 import { printDivContent } from "../../utils/printDivContent";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 export const Autorizacion = () => {
   const cliente = useSelector((state) => state.cliente);
   

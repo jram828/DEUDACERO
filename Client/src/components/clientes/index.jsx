@@ -137,7 +137,7 @@ export default Clientes;
 
 
 
-// import logo from "../../img/logoAveza.png";
+// import logo from "../../img/LOGO.jpg";
 
 // import { Link } from "react-router-dom";
 // import { Button } from "../Mystyles";

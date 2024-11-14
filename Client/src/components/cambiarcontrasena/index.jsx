@@ -1,5 +1,5 @@
 import "./cambiar.css";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import { Button } from "../Mystyles";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";

@@ -1,4 +1,4 @@
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import "./cotizacion.css";
 import "../../App.css";
 import { useState } from "react";

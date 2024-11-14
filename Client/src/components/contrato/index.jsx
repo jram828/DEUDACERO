@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 // import { URL } from "../../App";
 import axios from "axios";
 import { useParams } from "react-router-dom";

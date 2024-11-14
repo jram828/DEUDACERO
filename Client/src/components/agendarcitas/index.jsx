@@ -2,7 +2,7 @@ import "./agendarcitas.css";
 // import "../../App.css";
 import Calendario from "../../components/calendar";
 // import FormCita from "../formCrearCita/index";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { getCasos, getCasosTodos, setFiltro } from "../../redux/actions";
 import { useState, useEffect } from "react";
@@ -222,7 +222,7 @@ if (isLoading || !pages || !pages.datosPagina) {
 
 export default AgendarCitas;
 
-// import logo from "../../img/logoAveza.png";
+// import logo from "../../img/LOGO.jpg";
 // import "./agendarcitas.css";
 
 // const AgendarCitas = (props) => {

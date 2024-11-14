@@ -1,4 +1,4 @@
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import "./configurarrecordatorios.css";
 const ConfigurarRecordatorios = (props) => {
   return (

@@ -4,7 +4,7 @@ import "../../App.css";
 import "./login.css";
 import { Link } from "react-router-dom";
 import {useNavigate } from "react-router-dom";
-import logo from "../../img/logoAveza.png";
+import logo from "../../img/LOGO.jpg";
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { setAuth, setUserToken } from "../../redux/actions";
