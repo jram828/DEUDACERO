@@ -1,3 +1,5 @@
+import { crearResena } from "../controllers/resenas/crearResena";
+import { getResenas } from "../controllers/resenas/getResenas";
 
 const getResenasHandler = async (req, res) => {
   try {
