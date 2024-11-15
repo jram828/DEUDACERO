@@ -5,7 +5,7 @@ export default (sequelize) => {
     "Administrador",
     {
       id: {
-        type: DataTypes.INT,
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
