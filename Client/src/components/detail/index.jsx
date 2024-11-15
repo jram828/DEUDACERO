@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../Mystyles";
 import "../detail/detail.css";
-import { deleteAbogado, deleteCliente, modificarDatos, modificarDatosAbogado} from "../../redux/actions";
-import GooglePicker from "../../utils/googlePicker";
-import GoogleDriveFileUploader from "../../utils/googlePicker";
+import {
+  deleteAbogado,
+  deleteCliente,
+  modificarDatos,
+  modificarDatosAbogado,
+} from "../../redux/actions";
+import { listaacreedores } from "../../utils/acreedores.js";
+import { generarResena } from "../../handlers/generarResena.jsx";
+import { crearResena } from "../../redux/actions.js";
+import { formatNumero } from "../../utils/formatNumero.js";
 
 const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const source = useSelector((state) => state.source);
 
-  // const datos = useSelector((state) =>
-  //   source === "abogado" ? state.abogado : state.cliente
-  // );
-  console.log('Source:', source)
+  //console.log('Source:', source)
   const cliente = JSON.parse(localStorage.getItem("cliente"));
-  console.log('Cliente local:', cliente)
+  //console.log('Cliente local:', cliente)
 
   const abogado = JSON.parse(localStorage.getItem("abogado"));
-  console.log("Abogado local:", abogado);
+  //console.log("Abogado local:", abogado);
 
-  const datos = source === "abogado" ? abogado:cliente;
+  const datos = source === "abogado" ? abogado : cliente;
 
-  console.log("Datos cliente:", datos);
+  //console.log("Datos cliente:", datos);
   const Cedula =
     source === "abogado" ? datos.cedulaAbogado : datos.cedulaCliente;
 
@@ -42,6 +46,31 @@ const Detail = () => {
     comentarios: "",
     cedulanew: "",
   });
+
+  const initDeuda = {
+    idDeuda: "",
+    acreedor: "",
+    acreedorBuscado: "",
+    tipoDeuda: "",
+    tipoGarantia: "",
+    documentoSoporte: "",
+    capital: "",
+    intereses: "",
+    clasificacion: "",
+    diasMora: "",
+  };
+
+  const listaAcreedoresObj = [];
+  const deudasObj = [];
+  const initAcreedorFilt = {
+    acreedores: [],
+  };
+
+  const [deudas, setDeudas] = useState(deudasObj);
+  const [datosDeuda, setDatosDeuda] = useState(initDeuda);
+  const [acreedorFilt, setAcreedorFilt] = useState(initAcreedorFilt);
+  const [listaAcreedores, setListaAcreedores] = useState(listaAcreedoresObj);
+  const [editingField, setEditingField] = useState(null);
 
   useEffect(() => {
     if (source === "abogado") {
@@ -115,14 +144,86 @@ const Detail = () => {
     if (source === "abogado") {
       dispatch(modificarDatosAbogado(userDataDetail));
       window.localStorage.setItem("abogado", JSON.stringify(userDataDetail));
-     } else {
-      
+    } else {
       dispatch(modificarDatos(userDataDetail));
       window.localStorage.setItem("cliente", JSON.stringify(userDataDetail));
     }
   };
 
   console.log("Nuevos Datos cliente:", userDataDetail);
+
+  const addDeuda = (deuda) => {
+    setDeudas([...deudas, deuda]);
+    setDatosDeuda(initDeuda);
+  };
+
+  const addAcreedor = (acreedor) => {
+    setListaAcreedores([...listaAcreedores, acreedor]);
+  };
+
+  const handleDeudaChange = (e) => {
+    setDatosDeuda({
+      ...datosDeuda,
+      [e.target.name]: e.target.value,
+    });
+    setEditingField(e.target.name);
+  };
+
+  const handleSubmitDeuda = async (e) => {
+    e.preventDefault();
+    addDeuda(datosDeuda);
+    console.log("Acreedor buscado:", datosDeuda.acreedor);
+    const filteredAcreedor = listaacreedores.filter(
+      (acreedor) => acreedor.nombre === datosDeuda.acreedor
+    );
+    console.log("Acreedor encontrado:", filteredAcreedor);
+    addAcreedor(filteredAcreedor[0]);
+  };
+
+  const handlerGenerarResena = () => {
+    const datosresena = generarResena(deudas, cliente, listaAcreedores);
+
+    console.log("Datos insolvencia para back:", datosresena);
+    dispatch(crearResena(datosresena));
+  };
+
+  const handleAcreedorChange = (e) => {
+    e.preventDefault();
+
+    setDatosDeuda({
+      ...datosDeuda,
+      [e.target.name]: e.target.value,
+    });
+
+    const foundAcreedor = listaacreedores.filter((acreedor) =>
+      acreedor.nombre.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    console.log("Acreedores encontrados:", foundAcreedor);
+    setAcreedorFilt(foundAcreedor);
+  };
+
+  const parseNumero = (numeroFormateado) => {
+    return Number(numeroFormateado.replace(/[^0-9,-]+/g, "").replace(",", "."));
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      const { name } = e.target;
+
+      switch (editingField) {
+        case "capital":
+          setDatosDeuda({
+            ...datosDeuda,
+            [name]: parseNumero(datosDeuda[name]), // Formatea el valor solo cuando se presiona Enter
+          });
+          break;
+        default:
+          break;
+      }
+
+      setEditingField(null);
+    }
+  };
 
   return (
     <div className="contenedordetail">
@@ -131,11 +232,16 @@ const Detail = () => {
           <h5 className="titulo">Detalles</h5>
         </div>
         <div className="menu-detail">
-          {/* <Link to={"/cotizacion"}> */}
+          <input type="file" id="doc" />
+          <Button
+            className="botonesiniciosesion"
+            onClick={handlerGenerarResena}
+          >
+            Generar solicitud
+          </Button>
           <Button className="botonesiniciosesion" onClick={submitUpdateDetail}>
             Actualizar
           </Button>
-          {/* </Link> */}
           <Button onClick={handleDelete} className="botonesiniciosesion">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +256,7 @@ const Detail = () => {
             </svg>
             Eliminar
           </Button>
-          <GoogleDriveFileUploader/>
+
           {datos?.tarjetaProf ? (
             <Link to="/abogados">
               <Button>
@@ -193,22 +299,14 @@ const Detail = () => {
                 Volver
               </Button>
             </Link>
-            
           )}
-          {/* <Button className="botonesiniciosesion" onClick={generarContrato}>
-            Generar Documentos
-          </Button> */}
         </div>
-        {/* <div className="generardocumento">
-          <input type="file" id="doc" />
-        </div> */}
         {datos.nombres && (
           <h4 className="nombredetail">
             {datos.nombres.toUpperCase()} {datos.apellidos.toUpperCase()}{" "}
           </h4>
         )}
-        {/* </div> */}
-        {/* <img className="photo" src={character.image} alt={character.name} /> */}
+
         <div className="info">
           <div className="personal">
             <div className="infodetail">
@@ -237,19 +335,6 @@ const Detail = () => {
                 onChange={handleUpdateDetail}
               />
             </div>
-            {/* <div className="infodetail">
-              <label htmlFor="cedula" className="labeldetail">
-                Numero de cédula:
-              </label>
-              <input
-                type="number"
-                className="cajadetail"
-                name="cedula"
-                id="cedula"
-                value={userDataDetail.cedula}
-                onChange={handleUpdateDetail}
-              />
-            </div> */}
             <div className="infodetail">
               <label htmlFor="email" className="labeldetail">
                 Correo:
@@ -309,8 +394,8 @@ const Detail = () => {
                 </label>
                 <textarea
                   className="cajadetail"
-                  cols="30"
-                  rows="5"
+                  cols="90"
+                  rows="10"
                   name="comentarios"
                   id="comentarios"
                   value={userDataDetail.comentarios}
@@ -319,6 +404,131 @@ const Detail = () => {
               </div>
             )}
           </div>
+        </div>
+        <div className="infoseccion">
+          <div className="encabezadodeudas">
+            <h6 className="titulo">Información de las deudas</h6>
+          </div>
+          <div className="infodetaildeudas">
+            <label htmlFor="acreedor" className="labeldetaildeudas">
+              Selecciona el acreedor:
+            </label>
+            <input
+              type="text"
+              value={datosDeuda.acreedor}
+              name="acreedor"
+              id="acreedor"
+              className="cajadeudas"
+              onChange={(event) => handleAcreedorChange(event)}
+              placeholder="Buscar Institución..."
+            />
+          </div>
+          <div className="infodetaildeudas">
+            <select
+              name="acreedor"
+              id="acreedor"
+              className="cajadeudas"
+              onChange={(event) => handleDeudaChange(event)}
+            >
+              <option value="" className="opcionesacreedor">
+                Instituciones encontradas
+              </option>
+              {acreedorFilt.length > 0 &&
+                acreedorFilt.map((acreedor) => (
+                  <option
+                    key={acreedor.idAcreedor}
+                    value={acreedor.idAcreedor}
+                    className="opcionesacreedor"
+                  >
+                    {acreedor.nombre}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="infodetaildeudas">
+            <label htmlFor="tipoDeuda" className="labeldetaildeudas">
+              Tipo de deuda:
+            </label>
+            <input
+              type="text"
+              className="cajadeudas"
+              name="tipoDeuda"
+              id="tipoDeuda"
+              value={datosDeuda.tipoDeuda}
+              onChange={(event) => handleDeudaChange(event)}
+            />
+          </div>
+
+          <div className="infodetaildeudas">
+            <label htmlFor="capital" className="labeldetaildeudas">
+              Capital :
+            </label>
+            <input
+              type="text"
+              className="cajadeudas"
+              name="capital"
+              id="capital"
+              onChange={(event) => handleDeudaChange(event)}
+              value={
+                editingField === "capital"
+                  ? datosDeuda.capital
+                  : formatNumero(datosDeuda.capital)
+              }
+              onKeyDown={handleKeyPress}
+            />
+          </div>
+
+          <Button type="submit" value="Guardar" onClick={handleSubmitDeuda}>
+            Agregar deuda
+          </Button>
+          <table className="informationTable">
+            <thead>
+              <tr>
+                <th className="tableCell">Nombre acreedor</th>
+                <th className="tableCell">Naturaleza del crédito</th>
+                <th className="tableCell">Tipo de garantía</th>
+                <th className="tableCell">Documento que soporta la garantía</th>
+                <th className="tableCell">Capital</th>
+                <th className="tableCell">Valor intereses</th>
+                <th className="tableCell">Clasificación del Crédito</th>
+                <th className="tableCell">Número de días en mora</th>
+              </tr>
+            </thead>
+            <tbody>
+              {deudas.length > 0 ? (
+                deudas.map((deuda, index) => (
+                  <tr key={index}>
+                    <td className="tableCell" key={index}>
+                      {deuda.acreedor}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {deuda.tipoDeuda}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {deuda.tipoGarantia}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {deuda.documentoSoporte}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {formatNumero(deuda.capital)}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {formatNumero(deuda.intereses)}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {deuda.clasificacion}
+                    </td>
+                    <td className="tableCell" key={index}>
+                      {deuda.diasMora}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <td>&nbsp;</td>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

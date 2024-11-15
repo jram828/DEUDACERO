@@ -40,7 +40,7 @@ import CambiarContrasena from "./components/cambiarcontrasena/index.jsx";
 const URL = import.meta.env.VITE_URL;
 // const { URL } = process.env;
 // axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
-
+console.log("URL:", URL);
 axios.defaults.baseURL = URL;
 
 function App() {

@@ -41,6 +41,7 @@ export const GET_CLIENTES_TODOS = "GET_CLIENTES_TODOS";
 export const MODIFICAR_CASO = "MODIFICAR_CASO";
 export const DELETE_CONSULTA = "DELETE_CONSULTA";
 export const POST_INSOLVENCIA = "POST_INSOLVENCIA";
+export const POST_RESENA = "POST_RESENA";
 
 export const clienteActual = (cliente) => {
   console.log("Cliente Action:", cliente);
@@ -548,3 +549,18 @@ export  const crearSolicitud = (datosInsolvencia) => {
     }
   };
   };
+
+  export  const crearResena = (datosResena) => {
+    return async (dispatch) => {
+      const { data } = await axios.post('/insolvencia/crearresena', datosResena);
+      console.log('Data Crear Reseña:',data)
+      try {
+        return dispatch({
+          type: POST_INSOLVENCIA,
+          payload: data,
+        });
+      } catch (error) {
+        window.alert("No fue posible crear la solicitud de insolvencia!");
+      }
+    };
+    };

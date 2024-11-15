@@ -23,7 +23,7 @@ server.use(morgan("dev"));
 server.use(express.json());
 server.use(cors());
 
-server.use("/crmAveza", router); //Manejador de rutas 'REST'
+server.use("/deudaCero", router); //Manejador de rutas 'REST'
 
 server.use(express.static(path.join(dirname, 'dist')))
 

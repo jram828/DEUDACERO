@@ -48,7 +48,8 @@ import {
   FILTER_CITAS,
   SET_FILTRO,
   DELETE_CONSULTA,
-  POST_INSOLVENCIA
+  POST_INSOLVENCIA,
+  POST_RESENA,
 } from "./actions";
 
 let initialState = {
@@ -64,13 +65,14 @@ let initialState = {
   caso: {},
   cita: [],
   citas: [],
-  filtro:[],
+  filtro: [],
   consultas: [],
   pagos: [],
   source: "cliente",
   reviews: [],
   pages: [],
-  insolvencia:[],
+  insolvencia: [],
+  resena: [],
   reviewError: "",
   // userGit: null,
   loginError: "",
@@ -267,54 +269,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pagos: action.payload,
       };
-      case POST_INSOLVENCIA:
-        return {
-          ...state,
-          insolvencia: action.payload,
-        };
-      case CLEAN_USER:
-        return initialState;
-    // case LOGIN:
-    //   return {
-    //     ...state,
-    //     user: action.payload,
-    //     loginError: "",
-    //   };
-    // case LOGIN_FAILED:
-    //   return {
-    //     ...state,
-    //     loginError: action.payload,
-    //   };
-    // case LOG_FAILED:
-    //   return {
-    //     ...state,
-    //     logError: action.payload,
-    //   };
-
-    // case ADD_REVIEW:
-    //   return {
-    //     ...state,
-    //     reviews: [...state.reviews, action.payload],
-    //     reviewError: "",
-    //   };
-    // case FETCH_REVIEWS_SUCCESS:
-    //   return {
-    //     ...state,
-    //     reviews: action.payload,
-    //     reviewError: "",
-    //   };
-    // case FETCH_REVIEWS_FAILURE:
-    // case ADD_REVIEW_FAILURE:
-    //   return {
-    //     ...state,
-    //     reviewError: action.payload,
-    //   };
-    // case FETCH_REVIEWS_ALL:
-    //   return {
-    //     ...state,
-    //     pages: action.payload,
-    //   };
-
+    case POST_INSOLVENCIA:
+      return {
+        ...state,
+        insolvencia: action.payload,
+      };
+    case POST_RESENA:
+      return {
+        ...state,
+        resena: action.payload,
+      };
+    case CLEAN_USER:
+      return initialState;
     default:
       return state;
   }
