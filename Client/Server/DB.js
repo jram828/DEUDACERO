@@ -15,7 +15,7 @@ import documentosLegalesModel from "./models/DocumentosLegales.js";
 import documentoLegalTemplateModel from "./models/DocumentoTemplate.js";
 import tipoCasoModel from "./models/TipoDeCaso.js";
 import tipoNotificacionModel from "./models/TipoNotificacion.js";
-import usuarioModel from "./models/Administrador.js";
+import usuarioModel from "./models/Usuario.js";
 import paisModel from "./models/Pais.js";
 import departamentoModel from "./models/Departamento.js";
 import ciudadModel from "./models/Ciudad.js";
