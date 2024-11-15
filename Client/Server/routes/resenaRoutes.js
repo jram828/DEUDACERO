@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { crearResenaHandler, getResenasHandler } from "../handlers/resenaHandlers";
+import { crearResenaHandler, getResenasHandler } from "../handlers/resenaHandlers.js";
 
 const resenaRouter = Router();
 
