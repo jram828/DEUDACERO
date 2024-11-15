@@ -26,6 +26,13 @@
   margin: 5px;
 }
 
+.selectinfocrearu {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+  justify-content: flex-start;
+}
+
 /* Estilos de etiquetas */
 .labelcrearusuario {
   height: 25px;

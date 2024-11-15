@@ -220,7 +220,6 @@ const Detail = () => {
         default:
           break;
       }
-
       setEditingField(null);
     }
   };

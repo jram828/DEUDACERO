@@ -15,7 +15,7 @@ import documentosLegalesModel from "./models/DocumentosLegales.js";
 import documentoLegalTemplateModel from "./models/DocumentoTemplate.js";
 import tipoCasoModel from "./models/TipoDeCaso.js";
 import tipoNotificacionModel from "./models/TipoNotificacion.js";
-import usuarioModel from "./models/Usuario.js";
+import usuarioModel from "./models/Administrador.js";
 import paisModel from "./models/Pais.js";
 import departamentoModel from "./models/Departamento.js";
 import ciudadModel from "./models/Ciudad.js";
@@ -33,11 +33,12 @@ import sociedadModel from "./models/Sociedad.js";
 import obligacionAlimentariaModel from "./models/ObligacionAlimentaria.js";
 import motivosModel from "./models/Motivos.js";
 import solicitudModel from "./models/Solicitud.js";
+import administradorModel from "./models/Administrador.js";
 
 config(); // Cargar variables de entorno desde el archivo .env
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY } = process.env;
-console.log("Datos conexion:", { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY });
+// console.log("Datos conexion:", { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY });
 
 
 
@@ -63,6 +64,7 @@ const sequelize = new Sequelize(DB_DEPLOY, {
 // const DocumentoLegalTipoNotificacion = documentoLegalModelTipoNoti(sequelize);
 // const Cartera=carteraModel(sequelize);
 // const Review = reviewModel(sequelize);
+const Administrador = administradorModel(sequelize);
 const Caso = casoModel(sequelize);
 const Cotizacion = cotizacionModel(sequelize);
 const Consulta = consultaModel(sequelize);

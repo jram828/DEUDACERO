@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../App.css";
 import "./crearusuario.css";
 import logo from "../../img/LOGO.jpg";
@@ -6,6 +6,8 @@ import { Button } from "../Mystyles";
 import { Link } from "react-router-dom";
 import { crearUsuario } from "../../handlers/crearUsuario";
 import { useNavigate } from "react-router-dom";
+import { registroCliente } from "../../handlers/registroCliente";
+import { registroAbogado } from "../../handlers/registroAbogado";
 
 const CrearUsuario = () => {
   const [userDataCrear, setUserDataCrear] = useState({
@@ -14,13 +16,15 @@ const CrearUsuario = () => {
     nombres: "",
     apellidos: "",
     cedula: "",
+    cedulaCliente: "",
+    cedulaAbogado: "",
     celular: "",
     direccion: "",
     nombre_ciudad: "",
-    tipo_usuario: "1",
+    tipoUsuario: "cliente",
   });
   const navigate = useNavigate();
-  
+
   const handleChangeCrear = (e) => {
     setUserDataCrear({
       ...userDataCrear,
@@ -31,6 +35,20 @@ const CrearUsuario = () => {
   const submitHandlerCrear = (e) => {
     e.preventDefault();
     crearUsuario(userDataCrear);
+
+    if (userDataCrear.tipoUsuario === "cliente") {
+      setUserDataCrear({
+        ...userDataCrear,
+        cedulaCliente: userDataCrear.cedula, // Sintaxis ES6 para actualizar la key correspondiente
+      });
+      registroCliente(userDataCrear);
+    } else {
+      setUserDataCrear({
+        ...userDataCrear,
+        cedulaAbogado: userDataCrear.cedula, // Sintaxis ES6 para actualizar la key correspondiente
+      });
+      registroAbogado(userDataCrear);
+    }
     navigate("/");
   };
 
@@ -43,7 +61,7 @@ const CrearUsuario = () => {
         <h1 className="titulo">Crear Usuario</h1>
         <div className="infocrearu">
           <div className="infocrearusuario">
-            <label for="nombre" className="labelcrearusuario">
+            <label htmlFor="nombre" className="labelcrearusuario">
               Nombre(s):
             </label>
             <input
@@ -56,7 +74,7 @@ const CrearUsuario = () => {
             />
           </div>
           <div className="infocrearusuario">
-            <label for="apellidos" className="labelcrearusuario">
+            <label htmlFor="apellidos" className="labelcrearusuario">
               Apellido(s):
             </label>
             <input
@@ -71,7 +89,7 @@ const CrearUsuario = () => {
         </div>
         <div className="infocrearu">
           <div className="infocrearusuario">
-            <label for="numerocedula" className="labelcrearusuario">
+            <label htmlFor="numerocedula" className="labelcrearusuario">
               Numero de cédula:
             </label>
             <input
@@ -84,7 +102,7 @@ const CrearUsuario = () => {
             />
           </div>
           <div className="infocrearusuario">
-            <label for="correo" className="labelcrearusuario">
+            <label htmlFor="correo" className="labelcrearusuario">
               Email:
             </label>
             <input
@@ -99,7 +117,7 @@ const CrearUsuario = () => {
         </div>
         <div className="infocrearu">
           <div className="infocrearusuario">
-            <label for="direccion" className="labelcrearusuario">
+            <label htmlFor="direccion" className="labelcrearusuario">
               Dirección:
             </label>
             <input
@@ -112,7 +130,7 @@ const CrearUsuario = () => {
             />
           </div>
           <div className="infocrearusuario">
-            <label for="telefono" className="labelcrearusuario">
+            <label htmlFor="telefono" className="labelcrearusuario">
               Celular:
             </label>
             <input
@@ -127,7 +145,7 @@ const CrearUsuario = () => {
         </div>
         <div className="infocrearu">
           <div className="infocrearusuario">
-            <label for="ciudad" className="labelcrearusuario">
+            <label htmlFor="ciudad" className="labelcrearusuario">
               Ciudad:
             </label>
             <input
@@ -140,7 +158,7 @@ const CrearUsuario = () => {
             />
           </div>
           <div className="infocrearusuario">
-            <label for="contrasena" className="labelcrearusuario">
+            <label htmlFor="contrasena" className="labelcrearusuario">
               Contraseña:
             </label>
             <input
@@ -152,6 +170,21 @@ const CrearUsuario = () => {
               onChange={handleChangeCrear}
             />
           </div>
+        </div>
+        <div className="selectinfocrearu">
+          <select
+            name="tipoUsuario"
+            id="tipoUsuario"
+            className="cajascrearusuario"
+            onChange={(event) => handleChangeCrear(event)}
+          >
+            <option value="cliente" className="cajascrearusuario">
+              Cliente
+            </option>
+            <option value="abogado" className="cajascrearusuario">
+              Abogado
+            </option>
+          </select>
         </div>
         <div className="botonescrearusuario">
           <Button
