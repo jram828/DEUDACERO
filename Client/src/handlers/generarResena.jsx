@@ -70,6 +70,43 @@ export const generarResena = (
     planpagos,
   };
 
+  // Array de nombres de días y meses en español
+  const diasSemana = [
+    "domingo",
+    "lunes",
+    "martes",
+    "miércoles",
+    "jueves",
+    "viernes",
+    "sábado",
+  ];
+  const meses = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
+  // Obtener la fecha de hoy
+  const hoy = new Date();
+
+  // Obtener el nombre del día y la fecha en letras
+  const diaSemana = diasSemana[hoy.getDay()];
+  const dia = hoy.getDate();
+  const mes = meses[hoy.getMonth()];
+  const año = hoy.getFullYear();
+
+  // Crear la cadena de la fecha en letras
+  const fechaEnLetras = `${diaSemana}, ${dia} de ${mes} de ${año}`;
+
   const reader = new FileReader();
   if (docs.files.length === 0) {
     alert("No files selected");
@@ -103,6 +140,7 @@ export const generarResena = (
       capital: formatNumero(totalDeuda, 0),
       totalcuota: formatNumero(totalCuota, 0),
       planpagos: planpagos,
+      fecha: fechaEnLetras,
     });
 
     const blob = doc.getZip().generate({
