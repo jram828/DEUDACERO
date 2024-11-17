@@ -113,8 +113,8 @@ export const generarResena = (
     // Output the document using Data-URI
     saveAs(
       blob,
-      `RESEÑA TRAMITE DE INSOLVENCIA ${cliente.nombres}${" "} ${
-        cliente.apellidos
+      `RESEÑA TRAMITE DE INSOLVENCIA ${cliente.nombres.toUppercase()}${" "} ${
+        cliente.apellidos.toUppercase()
       }.docx`
     );
   };
