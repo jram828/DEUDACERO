@@ -87,11 +87,12 @@ export const generarResena = (
       paragraphLoop: true,
       linebreaks: true,
     });
-
+    const NOMBRES = cliente.nombres.toUpperCase();
+    const APELLIDOS = cliente.apellidos.toUpperCase();
     // !Reemplazar contenido de array en una tabla
     doc.render({
-      nombres: cliente.nombres,
-      apellidos: cliente.apellidos,
+      nombres: NOMBRES,
+      apellidos: APELLIDOS,
       celular: cliente.celular,
       cedula: cliente.cedula,
       direccion: cliente.direccion,
@@ -113,9 +114,7 @@ export const generarResena = (
     // Output the document using Data-URI
     saveAs(
       blob,
-      `RESEÑA TRAMITE DE INSOLVENCIA ${cliente.nombres.toUppercase()}${" "} ${
-        cliente.apellidos.toUppercase()
-      }.docx`
+      `RESEÑA TRAMITE DE INSOLVENCIA ${NOMBRES}${" "} ${APELLIDOS}.docx`
     );
   };
 
