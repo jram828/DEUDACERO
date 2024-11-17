@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import { useState} from "react";
 import { validar } from "../../utils/validacion";
 import "../../App.css";
 import "./login.css";
@@ -12,6 +12,7 @@ import photo from "../../assets/login.jpg";
 import { Button } from "../Mystyles";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
   const [userData, setUserData] = useState({
@@ -74,6 +75,7 @@ const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
       }
     } catch (error) {
       window.alert("Usuario o contraseña incorrectos");
+      console.log(error);
     }
   };
 
@@ -95,7 +97,7 @@ const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
                 <img
                   src={logo}
                   alt="Logo Aveza"
-                  style={{ height: "90px", width: "90%" }}
+                  style={{ height: "90px", width: "40%" }}
                 />
                 <br />
               </td>
@@ -213,4 +215,11 @@ const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
     </div>
   );
 };
+
+Form.propTypes = {
+  login: PropTypes.func.isRequired,
+  clickHandlerRecordatorio: PropTypes.func.isRequired,
+  clickHandlerCrear: PropTypes.func.isRequired,
+};
+
 export default Form;

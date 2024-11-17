@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { URL } from "../App";
 
 export const GET_CLIENTE_BY_CEDULA = "GET_CLIENTE_BY_CEDULA";
 export const GET_CLIENTES = "GET_CLIENTES"
@@ -42,6 +41,7 @@ export const MODIFICAR_CASO = "MODIFICAR_CASO";
 export const DELETE_CONSULTA = "DELETE_CONSULTA";
 export const POST_INSOLVENCIA = "POST_INSOLVENCIA";
 export const POST_RESENA = "POST_RESENA";
+export const GET_DEUDAS_CLIENTE = "GET_DEUDAS_CLIENTE"; 
 
 export const clienteActual = (cliente) => {
   console.log("Cliente Action:", cliente);
@@ -70,6 +70,7 @@ export const getClienteByCedula = (cedula) => {
         payload: data,
       });
     } catch (error) {
+      console.log(error);
       window.alert("Cliente no encontrado!");
     }
   };
@@ -86,6 +87,7 @@ return async (dispatch) => {
     });
   } catch (error) {
     window.alert("Clientes no encontrados!");
+    console.log(error);
   }
 };
 };
@@ -386,16 +388,13 @@ export const postConsulta =  async(payload) => {
       telefono: `${telefono}`,
     });
     console.log('respuesta post consulta:',data)
-    // return dispatch({
-    //   type: POST_CONSULTA,
-    //   payload: data,
-    // });
    } catch (error) {
     window.alert("No fue posible registrar la consulta.");
+    console.log(error);
   };
 }; 
 
-  export const getConsultas = (page) => {
+  export const getConsultas = () => {
     const endpoint = `/consultas`;
     return async (dispatch) => {
       const { data } = await axios.get(endpoint);
@@ -546,13 +545,14 @@ export  const crearSolicitud = (datosInsolvencia) => {
       });
     } catch (error) {
       window.alert("No fue posible crear la solicitud de insolvencia!");
+      console.log(error);
     }
   };
   };
 
   export  const crearResena = (datosResena) => {
     return async (dispatch) => {
-      const { data } = await axios.post('/insolvencia/crearresena', datosResena);
+      const { data } = await axios.post('/resena', datosResena);
       console.log('Data Crear Reseña:',data)
       try {
         return dispatch({
@@ -561,6 +561,23 @@ export  const crearSolicitud = (datosInsolvencia) => {
         });
       } catch (error) {
         window.alert("No fue posible crear la solicitud de insolvencia!");
+        console.log(error);
       }
     };
     };
+
+    export  const obtenerDeudasCliente = (cedulaCliente) => {
+      return async (dispatch) => {
+        const { data } = await axios.get('/resena/obtenerdeudas', {cedulaCliente});
+        console.log('Data obtener deudas:',data)
+        try {
+          return dispatch({
+            type: GET_DEUDAS_CLIENTE,
+            payload: data,
+          });
+        } catch (error) {
+          window.alert("No fue posible obtener las deudas del cliente!");
+          console.log(error);
+        }
+      };
+      };

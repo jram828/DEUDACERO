@@ -69,7 +69,8 @@ function App() {
         if (data.usuario.administrador || data.usuario.cedulaAbogado) {
           navigate("/clientes");
         } else if (data.usuario.cedulaCliente) {
-          navigate("/casos");
+          window.localStorage.setItem("cliente", JSON.stringify(data.usuario));
+          navigate("/detail");
         } else {
           navigate("/home");
         }
@@ -77,7 +78,7 @@ function App() {
         window.alert("Usuario o contraseña incorrectos");
       }
     } catch (error) {
-      window.alert("Usuario o contraseña incorrectos");
+      window.alert("Debe estar registrado como cliente o abogado para ingresar");
     }
   }
 

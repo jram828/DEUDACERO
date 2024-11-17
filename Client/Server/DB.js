@@ -195,6 +195,12 @@ Motivos.belongsToMany(Solicitud, { through: "solicitud_Motivos" });
 Solicitud.belongsToMany(Cliente, { through: "solicitud_solicitud" });
 Cliente.belongsToMany(Solicitud, { through: "solicitud_solicitud" });
 
+Deuda.belongsToMany(Cliente, { through: "cliente_deuda" });
+Cliente.belongsToMany(Deuda, { through: "cliente_deuda" });
+
+Deuda.belongsToMany(Acreedor, { through: "deuda_acreedor" });
+Acreedor.belongsToMany(Deuda, { through: "deuda_acreedor" });
+
 TipoUsuario.hasMany(Cliente);
 Cliente.belongsTo(TipoUsuario);
 

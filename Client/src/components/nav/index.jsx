@@ -1,5 +1,5 @@
 // import SearchBar from "../searchbar";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "../Mystyles";
 import logo from "../../img/LOGO.jpg";
 import "./nav.css";
@@ -7,15 +7,15 @@ import { useDispatch } from "react-redux";
 import { setFiltro } from "../../redux/actions";
 
 const Nav = ({ logout }) => {
-   const dispatch = useDispatch();
-   const user = JSON.parse(localStorage.getItem("loggedUser"));
- 
-   console.log("User local storage: ", user);
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("loggedUser"));
+
+  console.log("User local storage: ", user);
 
   const handleClick = () => {
     window.localStorage.setItem("filtroCita", JSON.stringify("usuario"));
-    dispatch(setFiltro('usuario'));
-  }
+    dispatch(setFiltro("usuario"));
+  };
   return (
     <div className="navbar">
       {/* <SearchBar onVerificarCliente={onVerificarCliente} /> */}
@@ -25,7 +25,7 @@ const Nav = ({ logout }) => {
       <br />
       <br />
       <br />
-      {(user.administrador=== true) && (
+      {user.administrador === true && (
         <Link to="/abogados">
           <Button>
             {" "}
@@ -68,7 +68,27 @@ const Nav = ({ logout }) => {
           </Button>
         </Link>
       )}
-      
+
+      {user.cedulaCliente && (
+        <Link to="/detail">
+          <Button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M3 1h12.414L21 6.586V23H3zm2 2v18h14V7.414L14.586 3zm7 6a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3m-3.5 1.5a3.5 3.5 0 1 1 7 0a3.5 3.5 0 0 1-7 0M6 19a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1h-2v-1a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v1H6z"
+              />
+            </svg>
+            {"   "}
+            Datos Personales
+          </Button>
+        </Link>
+      )}
+
       <Link to="/casos">
         <Button>
           {" "}
@@ -171,7 +191,8 @@ const Nav = ({ logout }) => {
               fill="black"
               d="M14 6h-1.7c-.2 0-.4-.1-.6-.2l-1.3-1.3c-.2-.3-.6-.5-1.1-.5H9c1.1 0 2-.9 2-2s-.9-2-2-2s-2 .9-2 2c0 .7.4 1.4 1 1.7l-.2.3h-2c-1.1 0-2.3.5-3 1.5l-.6.8c-.4.4-.2 1 .2 1.3c.4.2.9.1 1.2-.3l.5-.7c.3-.4.7-.6 1.2-.6h.8l-.7 1.6c-.3.6-.4 1.2-.4 1.9v2c0 .3-.2.5-.5.5H2c-.6 0-1 .4-1 1s.4 1 1 1h3.5c.8 0 1.5-.7 1.5-1.5V10l3.8 4.5c.6.9 1.7 1.5 2.8 1.5h.9L9.1 9.3c-.3-.4-.2-.8 0-1.3l.6-1.5l.7.8c.4.4 1 .7 1.6.7h2c.6 0 1-.4 1-1s-.4-1-1-1"
             ></path>
-          </svg>{"   "}
+          </svg>
+          {"   "}
           Cerrar Sesión
         </Button>
       </Link>
@@ -180,4 +201,3 @@ const Nav = ({ logout }) => {
 };
 
 export default Nav;
-

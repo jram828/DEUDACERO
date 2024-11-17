@@ -50,6 +50,7 @@ import {
   DELETE_CONSULTA,
   POST_INSOLVENCIA,
   POST_RESENA,
+  GET_DEUDAS_CLIENTE,
 } from "./actions";
 
 let initialState = {
@@ -72,6 +73,7 @@ let initialState = {
   reviews: [],
   pages: [],
   insolvencia: [],
+  deudasCliente: [],
   resena: [],
   reviewError: "",
   // userGit: null,
@@ -278,6 +280,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         resena: action.payload,
+      };
+    case GET_DEUDAS_CLIENTE:
+      return {
+        ...state,
+        deudasCliente: action.payload,
       };
     case CLEAN_USER:
       return initialState;

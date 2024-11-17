@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../App.css";
 import "./crearusuario.css";
 import logo from "../../img/LOGO.jpg";
@@ -31,23 +31,37 @@ const CrearUsuario = () => {
       [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
     });
   };
+   
+  // useEffect((userDataCrear) => {if (userDataCrear?.tipoUsuario === "cliente") {
+  //   setUserDataCrear(prevState => {
+  //     const updatedState = {
+  //       ...prevState,
+  //       cedulaCliente: prevState.cedula, // Actualización del estado
+  //     };
+  //     return updatedState;
+  //   });
+  // } else {
+  //   setUserDataCrear(prevState => {
+  //     const updatedState = {
+  //       ...prevState,
+  //       cedulaAbogado: prevState.cedula, // Actualización del estado
+  //     };
+  //     return updatedState;
+  //   });
+  // } }, [userDataCrear.cedula, userDataCrear.tipoUsuario]);
+
 
   const submitHandlerCrear = (e) => {
     e.preventDefault();
     crearUsuario(userDataCrear);
+ console.log("Datos crear usuario:", userDataCrear);
 
     if (userDataCrear.tipoUsuario === "cliente") {
-      setUserDataCrear({
-        ...userDataCrear,
-        cedulaCliente: userDataCrear.cedula, // Sintaxis ES6 para actualizar la key correspondiente
-      });
-      registroCliente(userDataCrear);
+      registroCliente({...userDataCrear, cedulaCliente: userDataCrear.cedula});
     } else {
-      setUserDataCrear({
-        ...userDataCrear,
-        cedulaAbogado: userDataCrear.cedula, // Sintaxis ES6 para actualizar la key correspondiente
-      });
-      registroAbogado(userDataCrear);
+      const adminPassword = prompt("Por favor, ingrese la contraseña de administrador:"); 
+      // dispatch(verifyAdminPassword(adminPassword)); registroAbogado(userDataCrear);
+      registroAbogado({...userDataCrear, cedulaAbogado: userDataCrear.cedula});
     }
     navigate("/");
   };
