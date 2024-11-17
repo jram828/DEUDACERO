@@ -37,9 +37,9 @@ const sendEmailCliente = ({nombres, email}) => {
          .replace("{{correo}}", email);
 
        const mailOptions = {
-         from: `CRM AVEZA <${EMAIL}>`,
+         from: `DEUDA CERO <${EMAIL}>`,
          to: email,
-         subject: "🚀 Bienvenido a CRM AVEZA!!",
+         subject: "🚀 Bienvenido a DEUDA CERO!!",
          html: personalizedHtml,
        };
 
