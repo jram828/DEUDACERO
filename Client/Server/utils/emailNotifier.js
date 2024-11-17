@@ -85,15 +85,17 @@ const sendEmailPassword = (nombre, correo, cedula) => {
 
     console.log("Datos email password:", nombre, correo, cedula);
 
-    const link= `https://crm-aveza-integrated.onrender.com/#/cambiarcontrasena?cedula=${cedula}&correo=${correo}`
+    console.log("Email:", EMAIL);
+
+    const link= `https://deudacero.onrender.com/#/cambiarcontrasena?cedula=${cedula}&correo=${correo}`
     var personalizedHtml = htmlTemplate
       .replace("{{nombre}}", nombre)
       .replace("{{link}}", link);
 
   const mailOptions = {
-    from: ` CRM AVEZA ${EMAIL}`,
+    from: ` DEUDA CERO ${EMAIL}`,
     to: correo,
-      subject: "🚀 Recordatorio de contraseña, CRM AVEZA.",
+      subject: "🚀 Recordatorio de contraseña, LAGOS CRM.",
     html: personalizedHtml
     // text: `${nombre}. Bienvenido a Legal Tech! Nos has solicitado recordar tu contraseña, aquí la tienes: ${password}`,
   };
