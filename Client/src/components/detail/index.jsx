@@ -513,7 +513,6 @@ const Detail = () => {
                       ? plan.tasaInteres
                       : formatNumero(plan.tasaInteres)
                   }
-                  onKeyDown={handleKeyPress}
                 />
               </div>
               <div className="infodetaildeudas">
