@@ -84,7 +84,7 @@ const Detail = () => {
   let deudasTabla = [];
 
   if (loggedUser?.cedulaAbogado && source === "cliente") {
-    deudasTabla = deudasCliente.Deudas;
+    deudasTabla = deudasCliente?.Deudas;
   } else {
     deudasTabla = deudas;
   }
