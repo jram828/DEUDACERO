@@ -1,6 +1,7 @@
+import { send } from "vite";
 import { models } from "../../DB.js";
-import {codigoCiudades} from "../../utils/codigoCiudades.js";
-import { sendEmailCliente } from "../../utils/emailNotifier.js";
+import { codigoCiudades } from "../../utils/codigoCiudades.js";
+import { sendEmailCliente, sendEmailNewCliente } from "../../utils/emailNotifier.js";
 
 const { Cliente, Ciudad, TipoDeCaso, TipoUsuario } = models;
 const createClienteBd = async (
@@ -77,7 +78,11 @@ const createClienteBd = async (
       // newCliente.addTipoDeCaso(tipo_de_caso);
       // newCliente.addTipoUsuario(tipo_usuario);
 
-      if (newCliente) sendEmailCliente(newCliente);
+      if (newCliente) {
+        sendEmailCliente(newCliente);
+        sendEmailNewCliente(newCliente);
+      }
+
       console.log(newCliente);
       return {
         ...newCliente.toJSON(),
@@ -85,7 +90,7 @@ const createClienteBd = async (
     } catch (error) {
       console.log(error);
       // res.status(500).send(error.message);
-      return error.message
+      return error.message;
     }
   }
 };
