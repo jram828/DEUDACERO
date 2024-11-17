@@ -570,7 +570,7 @@ export  const crearSolicitud = (datosInsolvencia) => {
     export  const obtenerDeudasCliente = (cedulaCliente) => {
       return async (dispatch) => {
         const { data } = await axios.post('/resena/obtenerdeudas', {cedulaCliente});
-        console.log('Data obtener deudas:',data)
+        //console.log('Data obtener deudas:',data)
         try {
           return dispatch({
             type: GET_DEUDAS_CLIENTE,

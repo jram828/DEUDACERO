@@ -83,12 +83,12 @@ const Detail = () => {
 
   let deudasTabla = [];
 
-  if (loggedUser?.cedulaAbogado&&source === "cliente") {
+  if (loggedUser?.cedulaAbogado && source === "cliente") {
     deudasTabla = deudasCliente.Deudas;
   } else {
     deudasTabla = deudas;
   }
- //console.log("Deudas tabla:", deudasTabla);
+  //console.log("Deudas tabla:", deudasTabla);
   useEffect(() => {
     if (source === "abogado") {
       setUserDataDetail({
@@ -222,11 +222,9 @@ const Detail = () => {
     addAcreedor(filteredAcreedor[0]);
   };
 
-
-
   const handlerGenerarResena = () => {
-    console.log("Tasa de interés:", plan.tasaInteres);
-    console.log("Número de cuotas:", plan.numeroCuotas);
+    //console.log("Tasa de interés:", plan.tasaInteres);
+    //console.log("Número de cuotas:", plan.numeroCuotas);
 
     try {
       const datosresena = generarResena(
@@ -235,12 +233,10 @@ const Detail = () => {
         plan.tasaInteres,
         plan.numeroCuotas
       );
-
     } catch (error) {
       console.error("Error al generar la reseña:", error.message);
       window.alert("No se pudo generar la reseña");
     }
- 
   };
 
   const handleGuardarResena = () => {
@@ -249,13 +245,13 @@ const Detail = () => {
       cliente,
       listaAcreedores,
     };
-    console.log("Datos reseña para back:", datosresena);
+    //console.log("Datos reseña para back:", datosresena);
     try {
       dispatch(crearResena(datosresena));
       window.alert("Deudas guardadas con éxito");
     } catch (error) {
-     window.alert("No se guardaron las deudas");
-  };
+      window.alert("No se guardaron las deudas");
+    }
   };
   const handleAcreedorChange = (e) => {
     e.preventDefault();
@@ -542,25 +538,40 @@ const Detail = () => {
                     <th className="tableCellDetail">Capital</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {deudasTabla?.length > 0 ? (
-                    deudasTabla.map((deuda, index) => (
-                      <tr key={index}>
-                        <td className="tableCellDetail" key={index}>
-                          {deuda.Acreedors[0].nombre}
-                        </td>
-                        <td className="tableCellDetail" key={index}>
-                          {deuda.tipoDeuda}
-                        </td>
-                        <td className="tableCellDetail" key={index}>
-                          {formatNumero(deuda.capital)}
-                        </td>
+
+                {deudasTabla?.length > 0 ? (
+                  deudasTabla.map((deuda, index) => (
+                    <>
+                      <tbody>
+                        <tr key={index}>
+                          <td
+                            className="tableCellDetail"
+                            key={index + "nombre"}
+                          >
+                            {deuda.Acreedors[0].nombre}
+                          </td>
+                          <td className="tableCellDetail" key={index + "tipo"}>
+                            {deuda.tipoDeuda}
+                          </td>
+                          <td
+                            className="tableCellDetail"
+                            key={index + "capital"}
+                          >
+                            {formatNumero(deuda.capital)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </>
+                  ))
+                ) : (
+                  <>
+                    <tbody>
+                      <tr>
+                      <td>&nbsp;</td>
                       </tr>
-                    ))
-                  ) : (
-                    <td>&nbsp;</td>
-                  )}
-                </tbody>
+                    </tbody>
+                  </>
+                )}
               </table>
             </div>
           ) : (
@@ -702,25 +713,42 @@ const Detail = () => {
                     <th className="tableCellDetail">Capital</th>
                   </tr>
                 </thead>
-                <tbody>
-                  {deudasTabla?.length > 0 ? (
-                    deudasTabla.map((deuda, index) => (
-                      <tr key={index}>
-                        <td className="tableCellDetail" key={index}>
-                          {deuda.acreedor}
-                        </td>
-                        <td className="tableCellDetail" key={index}>
-                          {deuda.tipoDeuda}
-                        </td>
-                        <td className="tableCellDetail" key={index}>
-                          {formatNumero(deuda.capital)}
-                        </td>
+                {deudasTabla?.length > 0 ? (
+                  deudasTabla.map((deuda, index) => (
+                    <>
+                      <tbody>
+                        <tr key={index}>
+                          <td
+                            className="tableCellDetail"
+                            key={index + "acreedor"}
+                          >
+                            {deuda.acreedor}
+                          </td>
+                          <td
+                            className="tableCellDetail"
+                            key={index + "tipoDeuda"}
+                          >
+                            {deuda.tipoDeuda}
+                          </td>
+                          <td
+                            className="tableCellDetail"
+                            key={index + "capital2"}
+                          >
+                            {formatNumero(deuda.capital)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </>
+                  ))
+                ) : (
+                  <>
+                    <tbody>
+                    <tr>
+                      <td>&nbsp;</td>
                       </tr>
-                    ))
-                  ) : (
-                    <td>&nbsp;</td>
-                  )}
-                </tbody>
+                    </tbody>
+                  </>
+                )}
               </table>
             </div>
           )}

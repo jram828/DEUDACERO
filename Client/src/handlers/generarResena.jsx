@@ -11,14 +11,14 @@ export const generarResena = (
   tasaInteres,
   numeroCuotas
 ) => {
-  console.log("Datos reseña:", {
-    deudasRaw,
-    cliente,
-    ciudad: cliente.Ciudads[0].nombre_ciudad,
-    // listaAcreedores,
-    tasaInteres,
-    numeroCuotas,
-  });
+  // console.log("Datos reseña:", {
+  //   deudasRaw,
+  //   cliente,
+  //   ciudad: cliente.Ciudads[0].nombre_ciudad,
+  //   // listaAcreedores,
+  //   tasaInteres,
+  //   numeroCuotas,
+  // });
   const docs = document.getElementById("doc");
 
   // const newAcreedores = listaAcreedores.map((acreedor, index) => ({
@@ -44,14 +44,14 @@ export const generarResena = (
     0
   );
 
-  console.log("Total deuda:", totalDeuda);
+  //console.log("Total deuda:", totalDeuda);
 
   const tasa = Number(tasaInteres) / 100;
   const cuotas = Number(numeroCuotas);
 
   const totalCuota = (totalDeuda * tasa) / (1 - Math.pow(1 + tasa, -cuotas));
 
-  console.log("Total cuota:", totalCuota);
+  //console.log("Total cuota:", totalCuota);
 
   deudas.forEach((deuda) => {
     const porcentajeDeuda = (Number(deuda.capital) * 100) / totalDeuda;
@@ -62,7 +62,7 @@ export const generarResena = (
   });
 
   const planpagos = generarPlanPagos(totalDeuda, tasa, cuotas, totalCuota);
-  console.log("Plan de pagos:", planpagos);
+  //console.log("Plan de pagos:", planpagos);
   const datosresena = {
     deudas,
     cliente,
