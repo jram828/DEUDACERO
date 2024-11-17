@@ -61,8 +61,6 @@ const Detail = () => {
     intereses: "",
     clasificacion: "",
     diasMora: "",
-    tasaInteres: "",
-    numeroCuotas: "",
   };
 
   const initPlan = {
@@ -85,7 +83,7 @@ const Detail = () => {
 
   let deudasTabla = [];
 
-  if (loggedUser?.cedulaAbogado) {
+  if (loggedUser?.cedulaAbogado&&source === "cliente") {
     deudasTabla = deudasCliente.Deudas;
   } else {
     deudasTabla = deudas;
@@ -229,12 +227,20 @@ const Detail = () => {
   const handlerGenerarResena = () => {
     console.log("Tasa de interés:", plan.tasaInteres);
     console.log("Número de cuotas:", plan.numeroCuotas);
-    const datosresena = generarResena(
-      deudasTabla,
-      cliente,
-      plan.tasaInteres,
-      plan.numeroCuotas
-    );
+
+    try {
+      const datosresena = generarResena(
+        deudasTabla,
+        cliente,
+        plan.tasaInteres,
+        plan.numeroCuotas
+      );
+
+    } catch (error) {
+      console.error("Error al generar la reseña:", error.message);
+      window.alert("No se pudo generar la reseña");
+    }
+ 
   };
 
   const handleGuardarResena = () => {
@@ -244,9 +250,13 @@ const Detail = () => {
       listaAcreedores,
     };
     console.log("Datos reseña para back:", datosresena);
-    dispatch(crearResena(datosresena));
+    try {
+      dispatch(crearResena(datosresena));
+      window.alert("Deudas guardadas con éxito");
+    } catch (error) {
+     window.alert("No se guardaron las deudas");
   };
-
+  };
   const handleAcreedorChange = (e) => {
     e.preventDefault();
 
@@ -508,11 +518,7 @@ const Detail = () => {
                   name="tasaInteres"
                   id="tasaInteres"
                   onChange={(event) => handlePlanChange(event)}
-                  value={
-                    editingField === "tasaInteres"
-                      ? plan.tasaInteres
-                      : formatNumero(plan.tasaInteres)
-                  }
+                  value={plan.tasaInteres}
                 />
               </div>
               <div className="infodetaildeudas">
@@ -525,12 +531,7 @@ const Detail = () => {
                   name="numeroCuotas"
                   id="numeroCuotas"
                   onChange={(event) => handlePlanChange(event)}
-                  value={
-                    editingField === "numeroCuotas"
-                      ? plan.numeroCuotas
-                      : formatNumero(plan.numeroCuotas)
-                  }
-                  onKeyDown={handleKeyPress}
+                  value={plan.numeroCuotas}
                 />
               </div>
               <table className="informationTable">
