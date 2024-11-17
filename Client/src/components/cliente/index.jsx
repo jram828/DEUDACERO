@@ -43,8 +43,8 @@ const Cliente = (props) => {
 };
 Cliente.propTypes = {
   cliente: PropTypes.shape({
-    cedulaAbogado: PropTypes.string,
-    cedulaCliente: PropTypes.string,
+    cedulaAbogado: PropTypes.number,
+    cedulaCliente: PropTypes.number,
     nombres: PropTypes.string.isRequired,
     apellidos: PropTypes.string.isRequired,
   }).isRequired,
