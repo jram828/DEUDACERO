@@ -15,7 +15,7 @@ const getPassword = async (email) => {
 
     if (!user) throw new Error("Usuario no encontrado");
     sendEmailPassword(user.nombres, user.email,user.cedula);
-    return user
+    return "Email enviado";
 
 };
 
