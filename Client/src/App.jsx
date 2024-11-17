@@ -156,7 +156,6 @@ function App() {
           element={<CrearUsuario crearUsuario={crearUsuario} />}
         />
         <Route path="/consultas" element={<Consultas />} />
-        <Route path="generar" element={<WordToHtml />} />
         <Route path="generarfactura" element={<GenerarFactura />} />
         <Route path="cotizacion" element={<Cotizacion />} />
         <Route path="autorizacion" element={<Autorizacion />} />
