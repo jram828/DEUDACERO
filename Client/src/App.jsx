@@ -22,7 +22,6 @@ import PDF from "./components/PDF/index.jsx";
 import Autorizacion from "./components/autorizacion/index.jsx";
 import Insolvencia from "./components/insolvencia/index.jsx";
 import Poder from "./components/poder/index.jsx";
-import WordToHtml from "./components/wordtohtml/index.jsx";
 import { useDispatch } from "react-redux";
 import { setAuth } from "./redux/actions.js";
 import Abogados from "./components/abogados/index.jsx";
