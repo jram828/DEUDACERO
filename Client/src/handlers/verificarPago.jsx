@@ -15,5 +15,6 @@ export async function verificarPago(id) {
     // window.alert("Se ha registrado el usuario con éxito.");
   } catch (error) {
     window.alert("No fue posible verificar el pago.");
+    console.log("Error al verificar el pago:", error.message);
   }
 }

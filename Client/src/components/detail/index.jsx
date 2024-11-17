@@ -230,9 +230,8 @@ const Detail = () => {
     console.log("Tasa de interés:", plan.tasaInteres);
     console.log("Número de cuotas:", plan.numeroCuotas);
     const datosresena = generarResena(
-      deudas,
+      deudasTabla,
       cliente,
-      listaAcreedores,
       plan.tasaInteres,
       plan.numeroCuotas
     );

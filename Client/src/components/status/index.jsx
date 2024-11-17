@@ -54,6 +54,7 @@ function Status() {
       return paymentData;
     } catch (error) {
       window.alert("No se obtuvieron los datos del pago");
+      console.log("Error al obtener los datos del pago:", error.message);
     }
   };
 

@@ -36,5 +36,6 @@ export async function postCaso(data) {
     window.alert("Se ha registrado el caso con éxito.");
   } catch (error) {
     window.alert("No fue posible registrar el caso.");
+    console.log("Error al crear el caso:", error.message);
   }
 }

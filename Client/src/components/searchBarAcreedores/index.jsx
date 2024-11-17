@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import "./searchBarAcreedores.css";
 import { filterAbogado } from "../../redux/actions";
@@ -71,6 +72,9 @@ const SearchBar = ({ onFilter }) => {
     </div>
 
   );
+};
+SearchBar.propTypes = {
+  onFilter: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

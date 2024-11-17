@@ -388,6 +388,7 @@ export const postConsulta =  async(payload) => {
       telefono: `${telefono}`,
     });
     //console.log('respuesta post consulta:',data)
+    return data;
    } catch (error) {
     window.alert("No fue posible registrar la consulta.");
     console.log(error);

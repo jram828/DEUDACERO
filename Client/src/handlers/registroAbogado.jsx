@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -39,5 +38,6 @@ export async function registroAbogado(userDataRegistro) {
     
   } catch (error) {
     window.alert("No fue posible registrar el abogado.");
+    console.log("Error al registrar el abogado:", error.message);
   }
 }

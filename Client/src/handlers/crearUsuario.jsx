@@ -38,5 +38,6 @@ export async function crearUsuario(userDataCrear) {
    
   } catch (error) {
     window.alert("No fue posible crear el usuario.");
+    console.log("Error al crear el usuario:", error.message);
   }
 }

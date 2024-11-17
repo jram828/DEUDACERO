@@ -17,5 +17,6 @@ export async function crearPago(data) {
     // window.alert("Se ha registrado el usuario con éxito.");
   } catch (error) {
     window.alert("No fue posible registrar el pago.");
+    console.log("Error al crear el pago:", error.message);
   }
 }

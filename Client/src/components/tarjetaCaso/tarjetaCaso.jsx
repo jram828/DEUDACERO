@@ -1,5 +1,6 @@
 import './tarjetaCaso.css'
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 // import picture from "../../assets/case-file.png"
 
 
@@ -48,5 +49,15 @@ function TarjetaCaso({caso}) {
   );
 }
 
+TarjetaCaso.propTypes = {
+  caso: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    tipoCaso: PropTypes.string.isRequired,
+    nombresabogado: PropTypes.string.isRequired,
+    apellidosAbogado: PropTypes.string.isRequired,
+    nombresCliente: PropTypes.string.isRequired,
+    apellidosCliente: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default TarjetaCaso

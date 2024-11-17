@@ -10,7 +10,6 @@ export async function postCitaHandlers(data) {
   } = data;
   //console.log("data del post", data);
 
-  const URL = "/citas";
   try {
     await axios.post('citas', {
       titulo: `${titulo}`,
@@ -22,5 +21,6 @@ export async function postCitaHandlers(data) {
     window.alert("Se ha registrado la cita con éxito.");
   } catch (error) {
     window.alert("No fue posible registrar la cita.");
+    console.log("Error al crear la cita:", error.message);
   }
 }

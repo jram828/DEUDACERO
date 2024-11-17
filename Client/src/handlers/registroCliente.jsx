@@ -43,5 +43,6 @@ export async function registroCliente(userDataRegistro) {
    
   } catch (error) {
     window.alert("No fue posible registrar el cliente.");
+    console.log("Error al registrar el cliente:", error.message); 
   }
 }

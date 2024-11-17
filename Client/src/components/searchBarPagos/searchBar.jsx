@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
+import PropTypes from 'prop-types';
 import { useDispatch } from "react-redux";
 import "./searchBar.css";
-import { filterCasos, getCasos } from "../../redux/actions";
+import { filterCasos} from "../../redux/actions";
 import { Button } from "../Mystyles";
-import { getTiposCasos } from "../../handlers/todosTiposdecasos";
+
 
 const SearchBar = ({ onFilter }) => {
 
@@ -15,7 +16,7 @@ const SearchBar = ({ onFilter }) => {
     setValue(e.target.value);
   };
 
-  const handleSearch = (searchParam) => {
+  const handleSearch = () => {
     const queryParts = [];
 
     //console.log("Parametro search: ", searchParam);
@@ -73,5 +74,9 @@ const SearchBar = ({ onFilter }) => {
     </div>
   );
 };
+SearchBar.propTypes = {
+  onFilter: PropTypes.func.isRequired,
+};
 
 export default SearchBar;
+

@@ -79,6 +79,7 @@ function App() {
       }
     } catch (error) {
       window.alert("Debe estar registrado como cliente o abogado para ingresar");
+      console.error("Error en login:", error.message);
     }
   }
 
