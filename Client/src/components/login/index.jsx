@@ -91,6 +91,7 @@ const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
       <div className="containerLogin">
         <form onSubmit={submitHandler}>
           <table>
+            <tbody>
             <tr>
               <td></td>
               <td colSpan={2} className="celdas">
@@ -205,6 +206,7 @@ const Form = ({ login, clickHandlerRecordatorio, clickHandlerCrear }) => {
               </td>
               <td></td>
             </tr>
+            </tbody>
           </table>
         </form>
         <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
