@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../../App.css";
 import "./crearusuario.css";
 import logo from "../../img/LOGO.jpg";
@@ -8,6 +8,7 @@ import { crearUsuario } from "../../handlers/crearUsuario";
 import { useNavigate } from "react-router-dom";
 import { registroCliente } from "../../handlers/registroCliente";
 import { registroAbogado } from "../../handlers/registroAbogado";
+import { codigoCiudades } from "../../utils/codigoCiudades";
 
 const CrearUsuario = () => {
   const [userDataCrear, setUserDataCrear] = useState({
@@ -23,6 +24,12 @@ const CrearUsuario = () => {
     nombre_ciudad: "",
     tipoUsuario: "cliente",
   });
+
+  const initCiudadFilt = {
+    ciudades: [],
+  };
+
+  const [ciudadFilt, setCiudadFilt] = useState(initCiudadFilt);
   const navigate = useNavigate();
 
   const handleChangeCrear = (e) => {
@@ -31,37 +38,41 @@ const CrearUsuario = () => {
       [e.target.name]: e.target.value, // Sintaxis ES6 para actualizar la key correspondiente
     });
   };
-   
-  // useEffect((userDataCrear) => {if (userDataCrear?.tipoUsuario === "cliente") {
-  //   setUserDataCrear(prevState => {
-  //     const updatedState = {
-  //       ...prevState,
-  //       cedulaCliente: prevState.cedula, // Actualización del estado
-  //     };
-  //     return updatedState;
-  //   });
-  // } else {
-  //   setUserDataCrear(prevState => {
-  //     const updatedState = {
-  //       ...prevState,
-  //       cedulaAbogado: prevState.cedula, // Actualización del estado
-  //     };
-  //     return updatedState;
-  //   });
-  // } }, [userDataCrear.cedula, userDataCrear.tipoUsuario]);
 
+  const handleCiudadChange = (e) => {
+    e.preventDefault();
+
+    setUserDataCrear({
+      ...userDataCrear,
+      [e.target.name]: e.target.value,
+    });
+
+    const foundCiudad = codigoCiudades.filter((ciudad) =>
+      ciudad.nombre_ciudad.toUpperCase().includes(e.target.value.toUpperCase())
+    );
+    //console.log("Acreedores encontrados:", foundAcreedor);
+    setCiudadFilt(foundCiudad);
+  };
 
   const submitHandlerCrear = (e) => {
     e.preventDefault();
     crearUsuario(userDataCrear);
- console.log("Datos crear usuario:", userDataCrear);
+    //console.log("Datos crear usuario:", userDataCrear);
 
     if (userDataCrear.tipoUsuario === "cliente") {
-      registroCliente({...userDataCrear, cedulaCliente: userDataCrear.cedula});
+      registroCliente({
+        ...userDataCrear,
+        cedulaCliente: userDataCrear.cedula,
+      });
     } else {
-      const adminPassword = prompt("Por favor, ingrese la contraseña de administrador:"); 
-      // dispatch(verifyAdminPassword(adminPassword)); registroAbogado(userDataCrear);
-      registroAbogado({...userDataCrear, cedulaAbogado: userDataCrear.cedula});
+      // const adminPassword = prompt(
+      //   "Por favor, ingrese la contraseña de administrador:"
+      // );
+      // // dispatch(verifyAdminPassword(adminPassword)); registroAbogado(userDataCrear);
+      // registroAbogado({
+      //   ...userDataCrear,
+      //   cedulaAbogado: userDataCrear.cedula,
+      // });
     }
     navigate("/");
   };
@@ -159,17 +170,57 @@ const CrearUsuario = () => {
         </div>
         <div className="infocrearu">
           <div className="infocrearusuario">
-            <label htmlFor="ciudad" className="labelcrearusuario">
-              Ciudad:
+            <label htmlFor="nombre_ciudad" className="labelcrearusuario">
+              Selecciona la ciudad:
             </label>
             <input
               type="text"
+              value={userDataCrear.nombre_ciudad}
+              name="nombre_ciudad"
+              id="nombre_ciudad"
+              className="cajadeudas"
+              onChange={(event) => handleCiudadChange(event)}
+              placeholder="Buscar Ciudad..."
+            />
+          </div>
+          <div className="infocrearusuario">
+            <select
               name="nombre_ciudad"
               id="city"
               className="cajascrearusuario"
-              value={userDataCrear.nombre_ciudad}
-              onChange={handleChangeCrear}
-            />
+              onChange={(event) => handleCiudadChange(event)}
+            >
+              <option value="" className="opcionesacreedor">
+                Ciudades
+              </option>
+              {ciudadFilt.length > 0 &&
+                ciudadFilt.map((ciudad) => (
+                  <option
+                    key={ciudad.codigo_ciudad}
+                    value={ciudad.nombre_ciudad}
+                    className="opcionesciudad"
+                  >
+                    {ciudad.nombre_ciudad}
+                  </option>
+                ))}
+            </select>
+          </div>
+        </div>
+        <div className="selectinfocrearu">
+          <div className="infocrearusuario">
+            <select
+              name="tipoUsuario"
+              id="tipoUsuario"
+              className="cajascrearusuario"
+              onChange={(event) => handleChangeCrear(event)}
+            >
+              <option value="cliente" className="cajascrearusuario">
+                Cliente
+              </option>
+              <option value="abogado" className="cajascrearusuario">
+                Abogado
+              </option>
+            </select>
           </div>
           <div className="infocrearusuario">
             <label htmlFor="contrasena" className="labelcrearusuario">
@@ -184,21 +235,6 @@ const CrearUsuario = () => {
               onChange={handleChangeCrear}
             />
           </div>
-        </div>
-        <div className="selectinfocrearu">
-          <select
-            name="tipoUsuario"
-            id="tipoUsuario"
-            className="cajascrearusuario"
-            onChange={(event) => handleChangeCrear(event)}
-          >
-            <option value="cliente" className="cajascrearusuario">
-              Cliente
-            </option>
-            <option value="abogado" className="cajascrearusuario">
-              Abogado
-            </option>
-          </select>
         </div>
         <div className="botonescrearusuario">
           <Button

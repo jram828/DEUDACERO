@@ -45,13 +45,13 @@ function Calendario() {
     dispatch(getCitas());
   }, [dispatch, filtro]);
 
-  console.log("Citas: ", citas);
+  //console.log("Citas: ", citas);
 
   let filteredCitas = [];
   useEffect(() => {
     if (citas) {
 
-      console.log('filtro calendario:', filtro)
+      //console.log('filtro calendario:', filtro)
       const filteredCitas = datos.administrador
         ? (filtro==='todos'?citas.datosPagina:citas.datosPagina?.filter(
             (cita) =>
@@ -65,12 +65,12 @@ function Calendario() {
               (cita.nombreAbogado === datos.nombres &&
                 cita.apellidoAbogado === datos.apellidos)
         );
-      console.log("Citas filtradas:", filteredCitas);
+      //console.log("Citas filtradas:", filteredCitas);
       setCitasId(filteredCitas);
     }
   }, [citas,filtro]);
 
-  console.log("Citas calendario: ", citasId);
+  //console.log("Citas calendario: ", citasId);
 
   const events = citasId
     ?.map((cita) => {

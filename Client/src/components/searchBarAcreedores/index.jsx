@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import "./searchBarAcreedores.css";
 import { filterAbogado } from "../../redux/actions";
 import { Button } from "../Mystyles";
-import { Link } from "react-router-dom";
 
 const SearchBar = ({ onFilter }) => {
   const [nombre, setNombre] = useState("");

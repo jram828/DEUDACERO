@@ -44,7 +44,7 @@ export const POST_RESENA = "POST_RESENA";
 export const GET_DEUDAS_CLIENTE = "GET_DEUDAS_CLIENTE"; 
 
 export const clienteActual = (cliente) => {
-  console.log("Cliente Action:", cliente);
+  //console.log("Cliente Action:", cliente);
   return {
     type: SET_CLIENTE,
     payload: cliente,
@@ -52,7 +52,7 @@ export const clienteActual = (cliente) => {
 };
 
 export const setAuth = (auth) => {
-  console.log("Verificar autenticacion:", auth);
+  //console.log("Verificar autenticacion:", auth);
   return {
     type: SET_AUTHENTICATED,
     payload: auth,
@@ -61,7 +61,7 @@ export const setAuth = (auth) => {
 
 export const getClienteByCedula = (cedula) => {
   
-  console.log('Cedula get by cedula:',cedula)
+  //console.log('Cedula get by cedula:',cedula)
   return async (dispatch) => {
     const { data } = await axios.get(`/${cedula}`);
     try {
@@ -79,7 +79,7 @@ export const getClienteByCedula = (cedula) => {
 export  const getClienteAll = () => {
 return async (dispatch) => {
   const { data } = await axios.get('/clientes/conocimientolitigios');
-  console.log('Data Get clientes:',data)
+  //console.log('Data Get clientes:',data)
   try {
     return dispatch({
       type: GET_CLIENTES,
@@ -93,7 +93,7 @@ return async (dispatch) => {
 };
   
 export const setUserToken = (userToken) => {
-  console.log("User token:", userToken);
+  //console.log("User token:", userToken);
   return {
     type: SET_USERTOKEN,
     payload: userToken,
@@ -101,7 +101,7 @@ export const setUserToken = (userToken) => {
 };
 
 export const setSource = (source) => {
-  console.log("Verificar source:", source);
+  //console.log("Verificar source:", source);
   return {
     type: SET_SOURCE,
     payload: source,
@@ -134,7 +134,7 @@ export const getAbogados = (page) => {
 
 export const getByIdAbogado = (cedulaAbogado) => {
   const endpoint = `/abogados/${cedulaAbogado}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -146,7 +146,7 @@ export const getByIdAbogado = (cedulaAbogado) => {
 
 export const getByIdCliente = (cedulaCliente) => {
   const endpoint = `/clientes/cedulacliente?cedulaCliente=${cedulaCliente}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -158,7 +158,7 @@ export const getByIdCliente = (cedulaCliente) => {
 
 export const filterCliente = (filtro) => {
   const endpoint = `/clientes/conocimientolitigios?${filtro}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
 
@@ -171,7 +171,7 @@ export const filterCliente = (filtro) => {
 
 export const filterAbogado = (filtro) => {
   const endpoint = `/abogados?${filtro}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
     return dispatch({
@@ -210,8 +210,8 @@ export const deleteAbogado = (cedulaAbogado) => {
 
   return async (dispatch) => {
     const data = await axios.post(endpoint, { cedulaAbogado });
-    console.log("url", endpoint);
-    console.log("cedula", cedulaAbogado);
+    //console.log("url", endpoint);
+    //console.log("cedula", cedulaAbogado);
     return dispatch({
       type: DELETE_ABOGADO,
       payload: data,
@@ -224,7 +224,7 @@ export const deleteCliente = (cedulaCliente) => {
 
   return async (dispatch) => {
     const data = await axios.post(endpoint, { cedulaCliente });
-    console.log("url", endpoint);
+    //console.log("url", endpoint);
     // console.log("cedula", cedulaAbogado);
     return dispatch({
       type: DELETE_CLIENTE,
@@ -258,7 +258,7 @@ export const getCasos = (page) => {
 export const getCasosTodos = () => {
   return async (dispatch) => {
     const { data } = await axios.get('/casos');
-    console.log('Data casos:',data)
+    //console.log('Data casos:',data)
     return dispatch({
       type: GET_CASOS_TODOS,
       payload: data,
@@ -268,7 +268,7 @@ export const getCasosTodos = () => {
 
 export const filterCasos = (filtro) => {
   const endpoint = `/casos?${filtro}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
 
@@ -293,10 +293,10 @@ export const orderCasos = (value) => {
 
 export const getCasoById = (id) => {
   const endpoint = `/casos/${id}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
-    console.log('Data get caso by Id:', data);
+    //console.log('Data get caso by Id:', data);
     return dispatch({
       type: GET_CASO_BY_ID,
       payload: data,
@@ -309,7 +309,7 @@ export const deleteCaso = (idCaso) => {
 
   return async (dispatch) => {
     const data = await axios.post(endpoint, { idCaso});
-    console.log("url", endpoint, "id", idCaso);
+    //console.log("url", endpoint, "id", idCaso);
 
     return dispatch({
       type: DELETE_CASO,
@@ -323,7 +323,7 @@ export const finCaso = (idCaso, fechaFin) => {
 
   return async (dispatch) => {
     const data = await axios.post(endpoint, { idCaso, fechaFin });
-    console.log("url", endpoint, "id", idCaso, "fechaFin", fechaFin);
+    //console.log("url", endpoint, "id", idCaso, "fechaFin", fechaFin);
 
     return dispatch({
       type: FIN_CASO,
@@ -357,7 +357,7 @@ export const getCitas = () => {
 
 export const filterCitas = (filtro) => {
   const endpoint = `/citas?${filtro}`;
-  console.log("URL", endpoint);
+  //console.log("URL", endpoint);
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
 
@@ -375,7 +375,7 @@ export const setFiltro = (filtro) => {
       };
 };
 export const postConsulta =  async(payload) => {
-   console.log('Payload post consulta:', payload)
+   //console.log('Payload post consulta:', payload)
   const { nombre, apellido, consulta, correo, telefono} = payload;
   
   // return async (dispatch) => {
@@ -387,7 +387,7 @@ export const postConsulta =  async(payload) => {
       correo: `${correo}`,
       telefono: `${telefono}`,
     });
-    console.log('respuesta post consulta:',data)
+    //console.log('respuesta post consulta:',data)
    } catch (error) {
     window.alert("No fue posible registrar la consulta.");
     console.log(error);
@@ -431,14 +431,14 @@ export const postConsulta =  async(payload) => {
   
 export const recordarPassword = async (email,cedula) => {
   const endpoint = `/login/password/?correo=${email}&cedula=${cedula}`;
-  console.log("PAYLOAD", email);
+  //console.log("PAYLOAD", email);
   const data = await axios.get(endpoint);
   return data;
 };
 
 export const cambiarPassword = async (password,cedula) => {
   const endpoint = `/login/password/?password=${password}&cedula=${cedula}`;
-  console.log("PAYLOAD", password);
+  //console.log("PAYLOAD", password);
   const data = await axios.post(endpoint);
   return data;
 };
@@ -471,7 +471,7 @@ export const getAbogadosTodos = () => {
 
     return async (dispatch) => {
       const data = await axios.put(endpoint, payload);
-      console.log("URL", endpoint, "PAYLOAD", payload);
+      //console.log("URL", endpoint, "PAYLOAD", payload);
       window.alert("Se ha actualizado el cliente con éxito.");
       return dispatch({
         type: MODIFICAR_DATOS,
@@ -485,7 +485,7 @@ export const getAbogadosTodos = () => {
 
       return async (dispatch) => {
         const data = await axios.put(endpoint, payload);
-        console.log("URL", endpoint, "PAYLOAD", payload);
+        //console.log("URL", endpoint, "PAYLOAD", payload);
         window.alert("Se ha actualizado el abogado con éxito.");
         return dispatch({
           type: MODIFICAR_DATOS_ABOGADO,
@@ -499,7 +499,7 @@ export const getAbogadosTodos = () => {
 
    return async (dispatch) => {
      const data = await axios.put(endpoint, payload);
-     console.log("URL", endpoint, "PAYLOAD", payload);
+     //console.log("URL", endpoint, "PAYLOAD", payload);
      window.alert("Se ha actualizado el caso con éxito.");
      return dispatch({
        type: MODIFICAR_CASO,
@@ -508,7 +508,7 @@ export const getAbogadosTodos = () => {
    };
  };
 export const setAbogado = (abogado) => {
-  console.log("Abogado Action:", abogado);
+  //console.log("Abogado Action:", abogado);
   return {
     type: SET_ABOGADO,
     payload: abogado,
@@ -516,7 +516,7 @@ export const setAbogado = (abogado) => {
 };
 
 export const setCliente = (source) => {
-  console.log("Limpiar estado detail:", source);
+  //console.log("Limpiar estado detail:", source);
   return {
     type: SET_CLIENTE,
     payload: source,
@@ -568,7 +568,7 @@ export  const crearSolicitud = (datosInsolvencia) => {
 
     export  const obtenerDeudasCliente = (cedulaCliente) => {
       return async (dispatch) => {
-        const { data } = await axios.get('/resena/obtenerdeudas', {cedulaCliente});
+        const { data } = await axios.post('/resena/obtenerdeudas', {cedulaCliente});
         console.log('Data obtener deudas:',data)
         try {
           return dispatch({

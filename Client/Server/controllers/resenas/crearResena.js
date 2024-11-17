@@ -5,11 +5,11 @@ const { Acreedor, Cliente, Deuda } = models;
 export const crearResena = async (datosResena) => {
   console.log("Body solicitud:", datosResena);
 
-  const { acreedores, deudas, cliente } = datosResena;
+  const { listaAcreedores, deudas, cliente } = datosResena;
 
   try {
     const foundCliente = await Cliente.findOne({
-      where: { cedulaCliente: cliente.cedula },
+      where: { cedulaCliente: cliente.cedulaCliente },
     });
 
     // for (let deuda of deudas) {
@@ -39,19 +39,38 @@ export const crearResena = async (datosResena) => {
     //   newAcreedor.addCliente(foundCliente);
     // }
     // console.log("Ultimo Acreedor: ", newAcreedor);
-    
-    if (deudas.length !== acreedores.length) { 
-      throw new Error('Los arrays deudas y acreedores deben tener la misma longitud');
-     } 
-    for (let i = 0; i < deudas.length; i++) { 
-      const deuda = deudas[i]; const acreedor = acreedores[i]; 
-      const newDeuda = await Deuda.create({ tipoDeuda: deuda.tipoDeuda, tipoGarantia: deuda.tipoGarantia, documentoSoporte: deuda.documentoSoporte, capital: deuda.capital, intereses: deuda.intereses, cuantiaTotal: Number(deuda.capital) + Number(deuda.intereses), clasificacion: deuda.clasificacion, diasMora: deuda.diasMora, }); 
-    await newDeuda.addCliente(foundCliente); 
-    
-    const newAcreedor = await Acreedor.create({ NIT: acreedor.NIT, email: acreedor.emailAcreedor, nombre: acreedor.nombreAcreedor, direccion: acreedor.direccionAcreedor, ciudad: acreedor.ciudadAcreedor, telefono: acreedor.telefono, });
-    await newAcreedor.addCliente(foundCliente); // Relacionar la deuda con el acreedor correspondiente 
-    await newDeuda.addAcreedor(newAcreedor); 
-    await newAcreedor.addDeuda(newDeuda);
+
+    if (deudas.length !== listaAcreedores.length) {
+      throw new Error(
+        "Los arrays deudas y acreedores deben tener la misma longitud"
+      );
+    }
+    for (let i = 0; i < deudas.length; i++) {
+      const deuda = deudas[i];
+      const acreedor = listaAcreedores[i];
+      const newDeuda = await Deuda.create({
+        tipoDeuda: deuda.tipoDeuda,
+        tipoGarantia: deuda.tipoGarantia,
+        documentoSoporte: deuda.documentoSoporte,
+        capital: deuda.capital,
+        intereses: deuda.intereses,
+        cuantiaTotal: Number(deuda.capital) + Number(deuda.intereses),
+        clasificacion: deuda.clasificacion,
+        diasMora: deuda.diasMora,
+      });
+      await newDeuda.addCliente(foundCliente);
+
+      const newAcreedor = await Acreedor.create({
+        NIT: acreedor.NIT,
+        email: acreedor.email,
+        nombre: acreedor.nombre,
+        direccion: acreedor.direccion,
+        ciudad: acreedor.ciudad,
+        telefono: acreedor.telefono,
+      });
+      await newAcreedor.addCliente(foundCliente); // Relacionar la deuda con el acreedor correspondiente
+      await newDeuda.addAcreedor(newAcreedor);
+      await newAcreedor.addDeuda(newDeuda);
     }
   } catch (error) {
     console.log(error);

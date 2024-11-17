@@ -41,10 +41,10 @@ export const generarPlanPagos = (
 ) => {
   const planPagos = [];
   let saldo = capitalInicial;
-  console.log("Saldo:", saldo);
+  //console.log("Saldo:", saldo);
   // Fecha de inicio: último día del mes actual + 90 días
   let fechaPago = sumarDias(ultimoDiaDelMes(new Date()), 90);
-  console.log("Fecha de pago:", fechaPago);
+  //console.log("Fecha de pago:", fechaPago);
   for (let i = 1; i <= numCuotas; i++) {
     const interes = saldo * tasaInteres;
     const amortizacion = cuotaMensual - interes;
@@ -63,7 +63,7 @@ export const generarPlanPagos = (
     // Incrementar la fecha de pago al próximo mes, ajustando al día correcto
     fechaPago = sumarMeses(fechaPago, 1);
 
-    console.log("Plan de pagos:", planPagos);
+    //console.log("Plan de pagos:", planPagos);
   }
   return planPagos;
 };

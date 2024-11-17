@@ -1,5 +1,5 @@
 export const formatNumero = (numero,decim) => {
-  console.log("Decimales:", decim);
+  //console.log("Decimales:", decim);
     if (!numero) return "";
  const decimales = decim ? 2 : 0;
     // Convertir a número flotante para manejar decimales

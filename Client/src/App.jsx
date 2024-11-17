@@ -40,7 +40,7 @@ import CambiarContrasena from "./components/cambiarcontrasena/index.jsx";
 const URL = import.meta.env.VITE_URL;
 // const { URL } = process.env;
 // axios.defaults.baseURL = "https://crm-aveza.onrender.com/crmAveza";
-console.log("URL:", URL);
+//console.log("URL:", URL);
 axios.defaults.baseURL = URL;
 
 function App() {
@@ -54,14 +54,14 @@ function App() {
   async function login(userData) {
     const { cedula, password, rol } = userData;
     const URL = "/login";
-    console.log("Datos login:", { cedula, password, rol });
+    //console.log("Datos login:", { cedula, password, rol });
     try {
       const { data } = await axios(
         URL + `?cedula=${cedula}&password=${password}`
       );
-      console.log("Login propio:", data);
+      //console.log("Login propio:", data);
       const { access } = data;
-      console.log("Access: ", access);
+      //console.log("Access: ", access);
       window.localStorage.setItem("loggedUser", JSON.stringify(data.usuario));
       if (access === true) {
         dispatch(setAuth(access));

@@ -15,7 +15,7 @@ const fillTemplate = () => {
     dispatch(getClienteAll());
   }, [dispatch]);
 
-  console.log("Clientes conocimiento: ", clientes);
+  //console.log("Clientes conocimiento: ", clientes);
 
   const generarContrato = () => {
 

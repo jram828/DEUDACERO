@@ -5,6 +5,6 @@ const resenaRouter = Router();
 
 resenaRouter.post("/", crearResenaHandler);
 resenaRouter.get("/", getResenasHandler);
-resenaRouter.get("/obtenerdeudas", getDeudasHandler);
+resenaRouter.post("/obtenerdeudas", getDeudasHandler);
 
 export default resenaRouter;

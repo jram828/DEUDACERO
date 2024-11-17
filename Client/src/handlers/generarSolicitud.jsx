@@ -15,20 +15,20 @@ export const generarSolicitud = (
   cliente,
   listaAcreedores
 ) => {
-  console.log("Datos solicitud:", {
-    ingresos,
-    gastos,
-    bienes,
-    procesos,
-    obligaciones,
-    sociedades,
-    deudas,
-    propuestas,
-    motivos,
-    cliente,
-    ciudad: cliente.Ciudads[0].nombre_ciudad,
-    listaAcreedores,
-  });
+  // console.log("Datos solicitud:", {
+  //   ingresos,
+  //   gastos,
+  //   bienes,
+  //   procesos,
+  //   obligaciones,
+  //   sociedades,
+  //   deudas,
+  //   propuestas,
+  //   motivos,
+  //   cliente,
+  //   ciudad: cliente.Ciudads[0].nombre_ciudad,
+  //   listaAcreedores,
+  // });
   const docs = document.getElementById("doc");
 
   const newAcreedores = listaAcreedores.map((acreedor, index) => ({

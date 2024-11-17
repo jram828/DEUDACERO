@@ -86,20 +86,20 @@ const Detail = () => {
   let deudasTabla = [];
 
   if (loggedUser?.cedulaAbogado) {
-    deudasTabla = deudasCliente;
+    deudasTabla = deudasCliente.Deudas;
   } else {
     deudasTabla = deudas;
   }
-
+ //console.log("Deudas tabla:", deudasTabla);
   useEffect(() => {
     if (source === "abogado") {
       setUserDataDetail({
         ...userDataDetail,
         email: datos.email,
         celular: datos.celular,
-        // ciudad: datos.Ciudads[0].nombre_ciudad,
-        // ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
-        // departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
+        ciudad: datos.Ciudads[0].nombre_ciudad,
+        ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
+        departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
         tarjetaProf: datos.tarjetaProf,
         nombres: datos.nombres,
         apellidos: datos.apellidos,
@@ -113,9 +113,9 @@ const Detail = () => {
         ...userDataDetail,
         email: datos.email,
         celular: datos.celular,
-        // ciudad: datos.Ciudads[0].nombre_ciudad,
-        // ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
-        // departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
+        ciudad: datos.Ciudads[0].nombre_ciudad,
+        ciudad_anterior: datos.Ciudads[0].codigo_ciudad,
+        departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
         nombres: datos.nombres,
         tarjetaProf: "",
         apellidos: datos.apellidos,
@@ -128,9 +128,9 @@ const Detail = () => {
   }, [dispatch, source]);
 
   useEffect(() => {
-    if (loggedUser.cedulaAbogado) {
+    if (loggedUser?.cedulaAbogado) {
       dispatch(obtenerDeudasCliente(datos.cedulaCliente));
-    } 
+    }
   }, [dispatch, datos.cedulaCliente]);
 
   const handleDelete = () => {
@@ -224,12 +224,7 @@ const Detail = () => {
     addAcreedor(filteredAcreedor[0]);
   };
 
-  // console.log("Tasa de interés:", tasaInteres);
-  // console.log("Número de cuotas:", numeroCuotas);
 
-  //console.log("Deudas:", deudas);
-  // console.log("Cliente:", cliente);
-  // console.log("Lista acreedores:", listaAcreedores);
 
   const handlerGenerarResena = () => {
     console.log("Tasa de interés:", plan.tasaInteres);
@@ -241,8 +236,15 @@ const Detail = () => {
       plan.tasaInteres,
       plan.numeroCuotas
     );
+  };
 
-    console.log("Datos insolvencia para back:", datosresena);
+  const handleGuardarResena = () => {
+    const datosresena = {
+      deudas,
+      cliente,
+      listaAcreedores,
+    };
+    console.log("Datos reseña para back:", datosresena);
     dispatch(crearResena(datosresena));
   };
 
@@ -315,7 +317,9 @@ const Detail = () => {
                   ref={fileInputRef}
                   onChange={handleFileChange}
                 />{" "}
-                <Button onClick={handleButtonClick}> Upload File </Button>{" "}
+                <Button onClick={handleButtonClick}>
+                  Seleccionar plantilla
+                </Button>{" "}
               </div>
               <Button
                 className="botonesiniciosesion"
@@ -540,11 +544,11 @@ const Detail = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {deudas.length > 0 ? (
+                  {deudasTabla?.length > 0 ? (
                     deudasTabla.map((deuda, index) => (
                       <tr key={index}>
                         <td className="tableCellDetail" key={index}>
-                          {deuda.acreedor}
+                          {deuda.Acreedors[0].nombre}
                         </td>
                         <td className="tableCellDetail" key={index}>
                           {deuda.tipoDeuda}
@@ -587,6 +591,7 @@ const Detail = () => {
                   id="acreedor"
                   className="cajadeudas"
                   onChange={(event) => handleDeudaChange(event)}
+                  defaultValue="Instituciones encontradas"
                 >
                   <option value="" className="opcionesacreedor">
                     Instituciones encontradas
@@ -607,14 +612,53 @@ const Detail = () => {
                 <label htmlFor="tipoDeuda" className="labeldetail">
                   Tipo de deuda:
                 </label>
-                <input
-                  type="text"
-                  className="cajadeudas"
+                <select
                   name="tipoDeuda"
                   id="tipoDeuda"
-                  value={datosDeuda.tipoDeuda}
+                  className="cajadeudas"
                   onChange={(event) => handleDeudaChange(event)}
-                />
+                  defaultValue="Tipo de deuda"
+                >
+                  <option value="" className="opcionesacreedor">
+                    Tipos de deudas
+                  </option>
+                  <option
+                    value="Tarjeta de Crédito"
+                    className="opcionesacreedor"
+                  >
+                    {" "}
+                    Tarjeta de Crédito
+                  </option>
+                  <option
+                    value="Crédito de libre inversión"
+                    className="opcionesacreedor"
+                  >
+                    {" "}
+                    Crédito de libre inversión
+                  </option>
+                  <option
+                    value="Crédito hipotecario"
+                    className="opcionesacreedor"
+                  >
+                    {" "}
+                    Crédito hipotecario
+                  </option>
+                  <option
+                    value="Crédito de vehículo"
+                    className="opcionesacreedor"
+                  >
+                    {" "}
+                    Crédito de vehículo
+                  </option>
+                  <option value="Impuestos" className="opcionesacreedor">
+                    {" "}
+                    Impuestos
+                  </option>
+                  <option value="Otros créditos" className="opcionesacreedor">
+                    {" "}
+                    Otros créditos
+                  </option>
+                </select>
               </div>
 
               <div className="infodetaildeudas">
@@ -635,10 +679,22 @@ const Detail = () => {
                   onKeyDown={handleKeyPress}
                 />
               </div>
-
-              <Button type="submit" value="Guardar" onClick={handleSubmitDeuda}>
-                Agregar deuda
-              </Button>
+              <div className="infodetaildeudas">
+                <Button
+                  type="submit"
+                  value="Guardar"
+                  onClick={handleSubmitDeuda}
+                >
+                  Agregar deuda
+                </Button>
+                <Button
+                  type="submit"
+                  value="Guardar"
+                  onClick={handleGuardarResena}
+                >
+                  Guardar deudas
+                </Button>
+              </div>
               <table className="informationTable">
                 <thead>
                   <tr>
@@ -648,8 +704,8 @@ const Detail = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {deudas.length > 0 ? (
-                    deudas.map((deuda, index) => (
+                  {deudasTabla?.length > 0 ? (
+                    deudasTabla.map((deuda, index) => (
                       <tr key={index}>
                         <td className="tableCellDetail" key={index}>
                           {deuda.acreedor}

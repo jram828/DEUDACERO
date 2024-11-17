@@ -18,7 +18,7 @@ import { formatNumero } from "../../utils/formatNumero";
 function DetailCasos() {
   const user = JSON.parse(localStorage.getItem("loggedUser"));
   const { id } = useParams(); // Obtener el id de los parámetros de la ruta
-  console.log("Id detail:", id);
+  //console.log("Id detail:", id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ function DetailCasos() {
     obtenerCaso(id);
   }, [id]);
 
-  console.log("Caso detail:", casoDetail);
+  //console.log("Caso detail:", casoDetail);
   // ciudad: datos.Ciudads[0].nombre_ciudad,
   // departamento: datos.Ciudads[0].Departamentos[0].nombre_departamento,
 
@@ -101,7 +101,7 @@ function DetailCasos() {
     const fechaFin = new Date().toISOString().split("T")[0]; // Obtener la fecha actual en formato YYYY-MM-DD
     dispatch(finCaso(id, fechaFin));
     // dispatch(getCasos());
-    console.log("id", id, "fechaFin", fechaFin);
+    //console.log("id", id, "fechaFin", fechaFin);
     navigate("/casos");
     // }
   };
@@ -113,7 +113,7 @@ function DetailCasos() {
 
     if (isConfirmed) {
       dispatch(deleteCaso(id));
-      console.log("id", id);
+      //console.log("id", id);
       navigate("/casos");
     }
   };
