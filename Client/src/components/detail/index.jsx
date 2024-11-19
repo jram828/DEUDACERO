@@ -515,7 +515,7 @@ const Detail = () => {
                 </label>
                 <input
                   type="text"
-                  className="cajadeudas"
+                  className="cajadetail"
                   name="tasaInteres"
                   id="tasaInteres"
                   onChange={(event) => handlePlanChange(event)}
@@ -528,7 +528,7 @@ const Detail = () => {
                 </label>
                 <input
                   type="text"
-                  className="cajadeudas"
+                  className="cajadetail"
                   name="numeroCuotas"
                   id="numeroCuotas"
                   onChange={(event) => handlePlanChange(event)}
@@ -600,10 +600,12 @@ const Detail = () => {
                   styles={{
                     control: (baseStyles) => ({
                       ...baseStyles,
-                      width: "20vw",
+                      width: "15vw",
                       height: "20px",
                       borderRadius: "10px",
                       border: "1px solid #000",
+                      margin: "10px",
+                      fontSize: "medium",
                     }),
                   }}
                 />
@@ -622,10 +624,12 @@ const Detail = () => {
                   styles={{
                     control: (baseStyles) => ({
                       ...baseStyles,
-                      width: "20vw",
+                      width: "15vw",
                       height: "20px",
                       borderRadius: "10px",
                       border: "1px solid #000",
+                      margin: "10px",
+                      fontSize: "medium",
                     }),
                   }}
                 />
@@ -637,7 +641,7 @@ const Detail = () => {
                 </label>
                 <input
                   type="text"
-                  className="cajadeudas"
+                  className="cajadetail"
                   name="capital"
                   id="capital"
                   onChange={(event) => handleDeudaChange(event)}
