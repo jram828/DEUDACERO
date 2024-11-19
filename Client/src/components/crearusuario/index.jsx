@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { registroCliente } from "../../handlers/registroCliente";
 import { registroAbogado } from "../../handlers/registroAbogado";
 import { codigoCiudades } from "../../utils/codigoCiudades";
+import Select from "react-select";
 
 const CrearUsuario = () => {
   const [userDataCrear, setUserDataCrear] = useState({
@@ -24,12 +25,8 @@ const CrearUsuario = () => {
     nombre_ciudad: "",
     tipoUsuario: "cliente",
   });
-
-  const initCiudadFilt = {
-    ciudades: [],
-  };
-
-  const [ciudadFilt, setCiudadFilt] = useState(initCiudadFilt);
+  const tiposUsuario = ["Cliente", "Abogado"];
+  console.log("userDataCrear", userDataCrear);
   const navigate = useNavigate();
 
   const handleChangeCrear = (e) => {
@@ -40,18 +37,17 @@ const CrearUsuario = () => {
   };
 
   const handleCiudadChange = (e) => {
-    e.preventDefault();
-
     setUserDataCrear({
       ...userDataCrear,
-      [e.target.name]: e.target.value,
+      ["nombre_ciudad"]: e.value,
     });
+  };
 
-    const foundCiudad = codigoCiudades.filter((ciudad) =>
-      ciudad.nombre_ciudad.toUpperCase().includes(e.target.value.toUpperCase())
-    );
-    //console.log("Acreedores encontrados:", foundAcreedor);
-    setCiudadFilt(foundCiudad);
+  const handleTipoChange = (e) => {
+    setUserDataCrear({
+      ...userDataCrear,
+      ["tipoUsuario"]: e.value,
+    });
   };
 
   const submitHandlerCrear = (e) => {
@@ -168,59 +164,29 @@ const CrearUsuario = () => {
             />
           </div>
         </div>
-        <div className="infocrearu">
-          <div className="infocrearusuario">
-            <label htmlFor="nombre_ciudad" className="labelcrearusuario">
-              Selecciona la ciudad:
-            </label>
-            <input
-              type="text"
-              value={userDataCrear.nombre_ciudad}
-              name="nombre_ciudad"
-              id="nombre_ciudad"
-              className="cajadeudas"
-              onChange={(event) => handleCiudadChange(event)}
-              placeholder="Buscar Ciudad..."
-            />
-          </div>
-          <div className="infocrearusuario">
-            <select
-              name="nombre_ciudad"
-              id="city"
-              className="cajascrearusuario"
-              onChange={(event) => handleCiudadChange(event)}
-            >
-              <option value="" className="opcionesacreedor">
-                Ciudades
-              </option>
-              {ciudadFilt.length > 0 &&
-                ciudadFilt.map((ciudad) => (
-                  <option
-                    key={ciudad.codigo_ciudad}
-                    value={ciudad.nombre_ciudad}
-                    className="opcionesciudad"
-                  >
-                    {ciudad.nombre_ciudad}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </div>
+
         <div className="selectinfocrearu">
           <div className="infocrearusuario">
-            <select
-              name="tipoUsuario"
-              id="tipoUsuario"
-              className="cajascrearusuario"
-              onChange={(event) => handleChangeCrear(event)}
-            >
-              <option value="cliente" className="cajascrearusuario">
-                Cliente
-              </option>
-              <option value="abogado" className="cajascrearusuario">
-                Abogado
-              </option>
-            </select>
+            <label htmlFor="tipoUsuario" className="labelcrearusuario">
+              Tipo de Usuario:
+            </label>
+            <Select
+              options={tiposUsuario.map((tipo) => ({
+                label: tipo,
+                value: tipo,
+              }))}
+              onChange={(event) => handleTipoChange(event)}
+              placeholder={"Seleccione..."}
+              styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  width: "20vw",
+                  height: "20px",
+                  borderRadius: "10px",
+                  border: "1px solid #000",
+                }),
+              }}
+            />
           </div>
           <div className="infocrearusuario">
             <label htmlFor="contrasena" className="labelcrearusuario">
@@ -233,6 +199,30 @@ const CrearUsuario = () => {
               className="cajascrearusuario"
               value={userDataCrear.password}
               onChange={handleChangeCrear}
+            />
+          </div>
+        </div>
+        <div className="infocrearu">
+          <div className="infocrearusuario">
+            <label htmlFor="nombre_ciudad" className="labelcrearusuario">
+              Ciudad:
+            </label>
+            <Select
+              options={codigoCiudades.map((ciudad) => ({
+                label: ciudad.nombre_ciudad,
+                value: ciudad.nombre_ciudad,
+              }))}
+              onChange={(event) => handleCiudadChange(event)}
+              placeholder={"Seleccione la ciudad"}
+              styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  width: "20vw",
+                  height: "20px",
+                  borderRadius: "10px",
+                  border: "1px solid #000",
+                }),
+              }}
             />
           </div>
         </div>

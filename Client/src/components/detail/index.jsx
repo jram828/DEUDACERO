@@ -15,6 +15,7 @@ import { generarResena } from "../../handlers/generarResena.jsx";
 import { crearResena } from "../../redux/actions.js";
 import { formatNumero } from "../../utils/formatNumero.js";
 import styled from "styled-components";
+import Select from "react-select";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ const Detail = () => {
     comentarios: "",
     cedulanew: "",
   });
-
+ console.log("userDataDetail", userDataDetail);
   const initDeuda = {
     idDeuda: "",
     acreedor: "",
@@ -70,17 +71,21 @@ const Detail = () => {
 
   const listaAcreedoresObj = [];
   const deudasObj = [];
-  const initAcreedorFilt = {
-    acreedores: [],
-  };
 
   const [deudas, setDeudas] = useState(deudasObj);
   const [datosDeuda, setDatosDeuda] = useState(initDeuda);
-  const [acreedorFilt, setAcreedorFilt] = useState(initAcreedorFilt);
   const [listaAcreedores, setListaAcreedores] = useState(listaAcreedoresObj);
   const [editingField, setEditingField] = useState(null);
   const [plan, setPlan] = useState(initPlan);
-
+  const tiposDeuda = [
+    "Libre inversión",
+    "Hipotecario",
+    "Crédito de vehículo",
+    "Microcrédito",
+    "Tarjeta de crédito",
+    "Leasing",
+    "Libranza",
+  ];
   let deudasTabla = [];
 
   if (loggedUser?.cedulaAbogado && source === "cliente") {
@@ -88,7 +93,7 @@ const Detail = () => {
   } else {
     deudasTabla = deudas;
   }
-  //console.log("Deudas tabla:", deudasTabla);
+  
   useEffect(() => {
     if (source === "abogado") {
       setUserDataDetail({
@@ -250,23 +255,24 @@ const Detail = () => {
       dispatch(crearResena(datosresena));
       window.alert("Deudas guardadas con éxito");
     } catch (error) {
+      console.error("Error al guardar las deudas:", error.message);
       window.alert("No se guardaron las deudas");
     }
   };
   const handleAcreedorChange = (e) => {
-    e.preventDefault();
-
     setDatosDeuda({
       ...datosDeuda,
-      [e.target.name]: e.target.value,
+      ["acreedor"]: e.value,
     });
-
-    const foundAcreedor = listaacreedores.filter((acreedor) =>
-      acreedor.nombre.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    //console.log("Acreedores encontrados:", foundAcreedor);
-    setAcreedorFilt(foundAcreedor);
   };
+
+  const handleTipoDeudaChange = (e) => {
+    setDatosDeuda({
+      ...datosDeuda,
+      ["tipoDeuda"]: e.value,
+    });
+  };
+
 
   const parseNumero = (numeroFormateado) => {
     return Number(numeroFormateado.replace(/[^0-9,-]+/g, "").replace(",", "."));
@@ -311,7 +317,6 @@ const Detail = () => {
           <h5 className="titulo">Detalles</h5>
         </div>
         <div className="menu-detail">
-          {/* <input type="file" id="doc" /> */}
           {datos?.tarjetaProf ? null : loggedUser?.cedulaAbogado ? (
             <>
               <div>
@@ -567,7 +572,7 @@ const Detail = () => {
                   <>
                     <tbody>
                       <tr>
-                      <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                       </tr>
                     </tbody>
                   </>
@@ -585,90 +590,45 @@ const Detail = () => {
                 <label htmlFor="acreedor" className="labeldetail">
                   Selecciona el acreedor:
                 </label>
-                <input
-                  type="text"
-                  value={datosDeuda.acreedor}
-                  name="acreedor"
-                  id="acreedor"
-                  className="cajadeudas"
+                <Select
+                  options={listaacreedores.map((acreedor) => ({
+                    label: acreedor.nombre,
+                    value: acreedor.nombre,
+                  }))}
                   onChange={(event) => handleAcreedorChange(event)}
-                  placeholder="Buscar Institución..."
+                  placeholder={"Seleccione la institución"}
+                  styles={{
+                    control: (baseStyles) => ({
+                      ...baseStyles,
+                      width: "20vw",
+                      height: "20px",
+                      borderRadius: "10px",
+                      border: "1px solid #000",
+                    }),
+                  }}
                 />
-              </div>
-              <div className="infodetaildeudas">
-                <select
-                  name="acreedor"
-                  id="acreedor"
-                  className="cajadeudas"
-                  onChange={(event) => handleDeudaChange(event)}
-                  defaultValue="Instituciones encontradas"
-                >
-                  <option value="" className="opcionesacreedor">
-                    Instituciones encontradas
-                  </option>
-                  {acreedorFilt.length > 0 &&
-                    acreedorFilt.map((acreedor) => (
-                      <option
-                        key={acreedor.idAcreedor}
-                        value={acreedor.idAcreedor}
-                        className="opcionesacreedor"
-                      >
-                        {acreedor.nombre}
-                      </option>
-                    ))}
-                </select>
               </div>
               <div className="infodetaildeudas">
                 <label htmlFor="tipoDeuda" className="labeldetail">
                   Tipo de deuda:
                 </label>
-                <select
-                  name="tipoDeuda"
-                  id="tipoDeuda"
-                  className="cajadeudas"
-                  onChange={(event) => handleDeudaChange(event)}
-                  defaultValue="Tipo de deuda"
-                >
-                  <option value="" className="opcionesacreedor">
-                    Tipos de deudas
-                  </option>
-                  <option
-                    value="Tarjeta de Crédito"
-                    className="opcionesacreedor"
-                  >
-                    {" "}
-                    Tarjeta de Crédito
-                  </option>
-                  <option
-                    value="Crédito de libre inversión"
-                    className="opcionesacreedor"
-                  >
-                    {" "}
-                    Crédito de libre inversión
-                  </option>
-                  <option
-                    value="Crédito hipotecario"
-                    className="opcionesacreedor"
-                  >
-                    {" "}
-                    Crédito hipotecario
-                  </option>
-                  <option
-                    value="Crédito de vehículo"
-                    className="opcionesacreedor"
-                  >
-                    {" "}
-                    Crédito de vehículo
-                  </option>
-                  <option value="Impuestos" className="opcionesacreedor">
-                    {" "}
-                    Impuestos
-                  </option>
-                  <option value="Otros créditos" className="opcionesacreedor">
-                    {" "}
-                    Otros créditos
-                  </option>
-                </select>
+                <Select
+                  options={tiposDeuda.map((tipo) => ({
+                    label: tipo,
+                    value: tipo,
+                  }))}
+                  onChange={(event) => handleTipoDeudaChange(event)}
+                  placeholder={"Seleccione..."}
+                  styles={{
+                    control: (baseStyles) => ({
+                      ...baseStyles,
+                      width: "20vw",
+                      height: "20px",
+                      borderRadius: "10px",
+                      border: "1px solid #000",
+                    }),
+                  }}
+                />
               </div>
 
               <div className="infodetaildeudas">
@@ -743,8 +703,8 @@ const Detail = () => {
                 ) : (
                   <>
                     <tbody>
-                    <tr>
-                      <td>&nbsp;</td>
+                      <tr>
+                        <td>&nbsp;</td>
                       </tr>
                     </tbody>
                   </>
